@@ -14,7 +14,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
-# show the bot has conntected to discord
+# show the bot has contected to discord
 @client.event
 async def on_ready():
     print(f'{client.user.name} has connected to Discord!')
