@@ -60,8 +60,7 @@ async def on_message(message):
         
         
         sender = 'discordbotforin01@gmail.com'
-        #receiver = message.content + '@qut.edu.au'
-        receiver = 'discordbotforin01@gmail.com'
+        receiver = message.content + '@qut.edu.au'
         body_send = "your verification code is: " + verify_code
 
         msg = MIMEText(body_send, 'html')
@@ -88,7 +87,6 @@ async def on_message(message):
       print("recieved")
       if message.content == db[f"code{j}"]:
         member = message.author
-        response = "Welcome to the server"
         await member.create_dm()
         await member.dm_channel.send(
           f'Hi there! Thank you for verifying your account, welcome to the server :)'
