@@ -11,7 +11,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from email.mime.multipart import MIMEMultipart
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+#asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 # bot is imported
 from discord.ext import commands
@@ -67,4 +67,11 @@ async def on_message(message):
         raise discord.DiscordException
 
 
+@client.event
+async def on_error(event, *args, **kwargs):
+    with open('logs/err.log', 'a') as f:
+        if event == 'on_message':
+            f.write(f'Unhandled message: {args[0]}\n')
+        else:
+            raise
 bot.run(TOKEN)
