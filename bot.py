@@ -1,4 +1,4 @@
-# bot.py
+# Libraries
 import os
 import asyncio
 import discord
@@ -8,11 +8,13 @@ import re
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+# load the .env file
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
+# show the bot has conntected to discord
 @client.event
 async def on_ready():
     print(f'{client.user.name} has connected to Discord!')
@@ -24,6 +26,7 @@ async def on_ready():
 #        f'Hi {member.name}, welcome to the QUT Bachelor'
 #    )
 
+# When student number is sent, return message
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -35,6 +38,7 @@ async def on_message(message):
     elif message.content == 'raise-exception':
         raise discord.DiscordException
 
+# Output errors to err.log
 @client.event
 async def on_error(event, *args, **kwargs):
     with open('logs/err.log', 'a') as f:
