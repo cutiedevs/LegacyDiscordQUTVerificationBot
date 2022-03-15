@@ -32,5 +32,16 @@ async def on_message(message):
     if re.search("^n[0-9]{8}",message.content):
         response = "Verification code sent"
         await message.channel.send(response)
+    elif message.content == 'raise-exception':
+        raise discord.DiscordException
+
+@client.event
+async def on_error(event, *args, **kwargs):
+    with open('logs/err.log', 'a') as f:
+        if event == 'on_message':
+            f.write(f'Unhandled message: {args[0]}\n')
+        else:
+            raise
+
 
 client.run(TOKEN)
