@@ -5,6 +5,11 @@ import discord
 from dotenv import load_dotenv
 from random import *
 import re
+import smtplib, ssl 
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from email.mime.multipart import MIMEMultipart
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
@@ -36,7 +41,25 @@ async def on_message(message):
     
     if re.search("^n[0-9]{8}",message.content):
         for i in range(4):
-            verify.append(randint(0, 9))
+            verify.append(str(randint(0, 9)))
+        
+        verify_code = ''.join(verify)
+        
+        
+        sender = 'discordbotforin01@gmail.com'
+        receiver = message.content + '@qut.edu.au'
+        body_send = "your verification code is: " + verify_code
+
+        msg = MIMEText(body_send, 'html')
+        msg['Subject'] = 'Verification'
+        msg['From'] = sender
+        msg['To'] = receiver
+        s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+        s.login(user = sender, password = os.getenv('GMAILPASS'))
+        s.sendmail(sender, receiver, msg.as_string())
+        s.quit()
+        
+        
         response = "Verification code sent"
         await message.channel.send(response)
         print(f'{verify} is the code')
