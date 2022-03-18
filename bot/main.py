@@ -153,7 +153,7 @@ async def on_message(message):
         print(codes)
         increment()
         
-        response = "Verification code sent"
+        response = "Verification code sent to your QUT student email"
         await message.channel.send(response)
         print(f'{verify} is the code')
     elif message.content == 'raise-exception':
