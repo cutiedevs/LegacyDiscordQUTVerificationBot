@@ -70,6 +70,8 @@ class Info(commands.Cog):
     embed=discord.Embed(title="QUTBot v1.2.1", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
+class Verify(commands.Cog):
+  """Verification commands"""
   @commands.command(
     name="verify",
     brief="Instructions on how to verify",
@@ -79,13 +81,15 @@ class Info(commands.Cog):
     embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
+class Update(commands.Cog):
+  """Update commands"""
   @commands.command(
     name="changelog",
     brief="Shows the changelog",
     help="Command to show all the changes in the current version of QUTBot"
   )
   async def _info(self, ctx):
-    embed=discord.Embed(title="QUTBot v1.2.1 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n- Added a command to view the changelog\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed=discord.Embed(title="QUTBot v1.2.2 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n- Added a command to view the changelog\n- Restructured commands\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
 
 
@@ -189,10 +193,10 @@ async def on_message(message):
 async def on_ready():
   guild = bot.get_guild(943354154129190922)
   print("I'm in")
-  announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
-  if announcements and announcements.permissions_for(guild.me).send_messages:
-    embed=discord.Embed(title="QUTBot v1.2.0 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
-    await announcements.send(embed=embed)
+  #announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
+  #if announcements and announcements.permissions_for(guild.me).send_messages:
+  #  embed=discord.Embed(title="QUTBot v1.2.0 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+  #  await announcements.send(embed=embed)
 
 @bot.event
 async def on_guild_join(guild):
@@ -213,6 +217,8 @@ def run():
   bot.add_cog(Moderation(bot))
   #bot.add_cog(Verification(bot))
   bot.add_cog(Info(bot))
+  bot.add_cog(Update(bot))
+  bot.add_cog(Verify(bot))
   bot.run(token)
   client.run(token)
 
