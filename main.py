@@ -78,6 +78,15 @@ class Info(commands.Cog):
   async def _info(self, ctx):
     embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
+  
+  @commands.command(
+    name="changelog",
+    brief="Shows the changelog",
+    help="Command to show all the changes in the current version of QUTBot"
+  )
+  async def _info(self, ctx):
+    embed=discord.Embed(title="QUTBot v1.2.0 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    await ctx.send(embed=embed)
 
 
 #class Verification(commands.Cog):
