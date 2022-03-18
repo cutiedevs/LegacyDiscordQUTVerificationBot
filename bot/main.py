@@ -17,6 +17,9 @@ from discord.utils import get
 from discord.utils import find
 from discord.ext.commands import Bot
 
+from itertools import *
+from discord.ext import tasks
+
 
 SKIP_BOTS = False
 
@@ -35,6 +38,9 @@ bot.help_command = PrettyHelp(menu=nav, color=discord.Colour.blue(), ending_note
 token = os.getenv("DISCORD_TOKEN")
 
 codes = []
+
+version = "QUTBot v1.2.3"
+changelog = "- Fixed a minor bug with the verification\n- Streamlined changelog and description changing\n- Added fluid changing statuses with 8 phrases (see if you can find them all :D)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 class Moderation(commands.Cog):
   """All Moderation Commands"""
@@ -67,7 +73,8 @@ class Info(commands.Cog):
     help="Command to provide information about the bot"
   )
   async def _info(self, ctx):
-    embed=discord.Embed(title="QUTBot v1.2.2", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    global version
+    embed=discord.Embed(title="f{version}", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
 class Verify(commands.Cog):
@@ -89,7 +96,9 @@ class Update(commands.Cog):
     help="Command to show all the changes in the current version of QUTBot"
   )
   async def _info(self, ctx):
-    embed=discord.Embed(title="QUTBot v1.2.2 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n- Added a command to view the changelog\n- Restructured commands\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    global version
+    global changelog
+    embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
 
 
@@ -180,7 +189,9 @@ async def on_message(message):
       print(removal)
       codes.pop(removal)
       old_role = discord.utils.get(member.guild.roles, name="Visitor")
+      temp_role = discord.utils.get(member.guild.roles, name="Visitor Temp")
       await member.remove_roles(old_role)
+      await member.remove_roles(temp_role)
       role = discord.utils.get(member.guild.roles, name="Verified")
       await member.add_roles(role)
       await member.create_dm()
@@ -188,15 +199,27 @@ async def on_message(message):
         f'Hi there! Thank you for verifying your account, welcome to the server :)'
       )
       
+
+@tasks.loop(seconds = 1440)
+async def status_loop():
+  status = ["qut!help for commands", "Check HiQ for info about QUT", "Don't forget to submit!", "Who doesn't love coding", "Why doesn't my Pi work?", "Programming is hard :(", "Can I join someone's group?", "Pokemon is cool!"]
+  for i in range(len(status)):
+    await sleep(180)
+    await bot.change_presence(activity=discord.Game(status[i]))
+
+
 @bot.event
 async def on_ready():
-  guild = bot.get_guild(943354154129190922)
-  await bot.change_presence(activity=discord.Game('qut!help for commands'))
+  global version
+  global changelog
+  guild = bot.get_guild(943354154129190922) # QUT server
+  #guild = bot.get_guild(953551552562475048) # test server
   print("I'm in")
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
   if announcements and announcements.permissions_for(guild.me).send_messages:
-    embed=discord.Embed(title="QUTBot v1.2.2 Changelog", url="https://realdrewdata.medium.com/", description=f"- Added support for student numbers between 6 and 12 characters\n- Added update announcements\n- Added a command to view the changelog\n- Restructured commands\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
     await announcements.send(embed=embed)
+  status_loop.start()
 
 @bot.event
 async def on_guild_join(guild):
@@ -221,6 +244,7 @@ def run():
   bot.add_cog(Verify(bot))
   bot.run(token)
   client.run(token)
+
 
 if __name__ == "__main__":
   run()
