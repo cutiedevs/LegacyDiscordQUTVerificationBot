@@ -188,10 +188,10 @@ async def on_message(message):
         f'Hi there! Thank you for verifying your account, welcome to the server :)'
       )
       
-
 @bot.event
 async def on_ready():
   guild = bot.get_guild(943354154129190922)
+  await bot.change_presence(activity=discord.Game('qut!help for commands'))
   print("I'm in")
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
   if announcements and announcements.permissions_for(guild.me).send_messages:
