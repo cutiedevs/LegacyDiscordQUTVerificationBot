@@ -1,3 +1,4 @@
+### Libraries ###
 import discord
 from discord.ext import commands
 from pretty_help import DefaultMenu, PrettyHelp
@@ -19,8 +20,10 @@ from discord.ext.commands import Bot
 
 from itertools import *
 from discord.ext import tasks
+### End Libraries ###
 
 
+# Global variables
 SKIP_BOTS = False
 
 intents = discord.Intents.all()
@@ -39,9 +42,10 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
-version = "QUTBot v1.2.3"
-changelog = "- Fixed a minor bug with the verification\n- Streamlined changelog and description changing\n- Added fluid changing statuses with 8 phrases (see if you can find them all :D)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.2.4"
+changelog = "- Fixed a minor bug with the status\n- Added comments for better source code readability\n- Added a new phrase to the status\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
+#moderation commands
 class Moderation(commands.Cog):
   """All Moderation Commands"""
   @commands.command(
@@ -65,6 +69,7 @@ class Moderation(commands.Cog):
   #      mgs.append(x)
   #  await Client.delete_messages(mgs)
 
+# commands for information
 class Info(commands.Cog):
   """Information commands"""
   @commands.command(
@@ -77,6 +82,7 @@ class Info(commands.Cog):
     embed=discord.Embed(title="f{version}", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
+# Commands for verification
 class Verify(commands.Cog):
   """Verification commands"""
   @commands.command(
@@ -88,6 +94,7 @@ class Verify(commands.Cog):
     embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
+# commands for update related things
 class Update(commands.Cog):
   """Update commands"""
   @commands.command(
@@ -140,6 +147,7 @@ def increment():
   numb = numb + 1
 
 
+# Verification function
 @bot.listen()
 async def on_message(message):
   if message.author == client.user:
@@ -147,8 +155,10 @@ async def on_message(message):
     
   verify = []
     
+  # listen for a student number
   if re.search("^n[0-9]{6,12}",message.content):
     for i in range(4):
+      # generate random unique verification code
       verify.append(str(random.randint(0, 9)))
       
     verify_code = ''.join(verify)
@@ -156,7 +166,7 @@ async def on_message(message):
     global numb
     j = numb
 
-    
+    # Code to email the verification code
     sender = 'discordbotforin01@gmail.com'
     receiver = message.content + '@qut.edu.au'
     #receiver = 'discordbotforin01@gmail.com'
@@ -181,6 +191,7 @@ async def on_message(message):
   elif message.content == 'raise-exception':
     raise discord.DiscordException
 
+  # Listens for the verification code
   if re.search("[0-9]{4}",message.content):
     print("recieved")
     if message.content in codes:
@@ -188,26 +199,30 @@ async def on_message(message):
       removal = codes.index(message.content)
       print(removal)
       codes.pop(removal)
+      # Change roles
       old_role = discord.utils.get(member.guild.roles, name="Visitor")
       temp_role = discord.utils.get(member.guild.roles, name="Visitor Temp")
       await member.remove_roles(old_role)
       await member.remove_roles(temp_role)
       role = discord.utils.get(member.guild.roles, name="Verified")
       await member.add_roles(role)
+      await message.channel.send(f'User Verified')
       await member.create_dm()
       await member.dm_channel.send(
         f'Hi there! Thank you for verifying your account, welcome to the server :)'
       )
       
 
+# Loop to change the status
 @tasks.loop(seconds = 1440)
 async def status_loop():
-  status = ["qut!help for commands", "Check HiQ for info about QUT", "Don't forget to submit!", "Who doesn't love coding", "Why doesn't my Pi work?", "Programming is hard :(", "Can I join someone's group?", "Pokemon is cool!"]
+  status = ["qut!help for commands", "Check HiQ for info about QUT", "Don't forget to submit!", "Who doesn't love coding", "Why doesn't my Pi work?", "Programming is hard :(", "Can I join someone's group?", "Pokemon is cool!", f"Hi there! {version}"]
   for i in range(len(status)):
     await sleep(180)
     await bot.change_presence(activity=discord.Game(status[i]))
 
 
+# Runs when the bot turns on
 @bot.event
 async def on_ready():
   global version
@@ -215,18 +230,25 @@ async def on_ready():
   guild = bot.get_guild(943354154129190922) # QUT server
   #guild = bot.get_guild(953551552562475048) # test server
   print("I'm in")
+  
+  # Sends changelog in announcements
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
   if announcements and announcements.permissions_for(guild.me).send_messages:
     embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
     await announcements.send(embed=embed)
+    
+  # Begins the status changing
+  await bot.change_presence(activity=discord.Game(f"Hi there! {version}"))
   status_loop.start()
 
+# Runs when the bot joins a server
 @bot.event
 async def on_guild_join(guild):
   general = find(lambda x: x.name == 'general-general',  guild.text_channels)
   if general and general.permissions_for(guild.me).send_messages:
     await general.send("Hi there! I'm QUTBot, I don't have many features right now, but I hope you'll help me grow :D")
 
+# assigns a new member the visitor role then DMs them
 @bot.event 
 async def on_member_join(member):
   role = get(member.guild.roles, name="Visitor")
@@ -235,7 +257,8 @@ async def on_member_join(member):
   await member.dm_channel.send(
     f'{member.mention} Please send your QUT student number in #visitor (E.g: "n12345678"), then send the verification code that will be emailed to you.\n\n**Do Not Respond To This Message**'
   )
-  
+
+# Runs everything
 def run():
   bot.add_cog(Moderation(bot))
   #bot.add_cog(Verification(bot))
