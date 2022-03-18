@@ -245,8 +245,8 @@ async def status_loop():
 async def on_ready():
   global version
   global changelog
-  #guild = bot.get_guild(943354154129190922) # QUT server
-  guild = bot.get_guild(953551552562475048) # test server
+  guild = bot.get_guild(943354154129190922) # QUT server
+  #guild = bot.get_guild(953551552562475048) # test server
   print("I'm in")
   
   # Sends changelog in announcements
