@@ -18,7 +18,6 @@ from discord.utils import get
 from discord.utils import find
 from discord.ext.commands import Bot
 
-from itertools import *
 from discord.ext import tasks
 ### End Libraries ###
 
@@ -42,8 +41,8 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
-version = "QUTBot v1.2.4"
-changelog = "- Fixed a minor bug with the status\n- Added comments for better source code readability\n- Added a new phrase to the status\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.3.0"
+changelog = "- Fixed a minor bug with the status\n- Added comments for better source code readability\n- Added a new phrase to the status\n- Added command to link to issues page on GitHub\n- Added command to link straight to HiQ\n- Fixed links in embeds\n- Added tumbnails to embeds that need them\n- Restructured commands\n- Added an author to the changelog\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 #moderation commands
 class Moderation(commands.Cog):
@@ -79,7 +78,40 @@ class Info(commands.Cog):
   )
   async def _info(self, ctx):
     global version
-    embed=discord.Embed(title="f{version}", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed=discord.Embed(title="f{version}", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
+    await ctx.send(embed=embed)
+    
+  @commands.command(
+    name="changelog",
+    brief="Shows the changelog",
+    help="Command to show all the changes in the current version of QUTBot"
+  )
+  async def _changelog(self, ctx):
+    global version
+    global changelog
+    embed=discord.Embed(title=f"{version} Changelog", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"{changelog}", color=discord.Color.dark_blue())
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
+    embed.set_author(name="Emmey", icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
+    await ctx.send(embed=embed)
+  
+  @commands.command(
+    name="bug",
+    brief="Gives new issue submission link",
+    help="Command to provide the issues link for the QUTBot GitHub"
+  )
+  async def _bug(self, ctx):
+    embed=discord.Embed(title=f"{version} Issue report", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"Please go to this site and fill out a bug report:\n\nhttps://github.com/Mistyttm/DiscordQUTVerificationBot/issues/new/choose", color=discord.Color.red())
+    await ctx.send(embed=embed)
+  
+  @commands.command(
+    name="hiq",
+    brief="Sends link to HiQ",
+    help="Command to send the link directly to the HiQ homepage"
+  )
+  async def _hiq(self, ctx):
+    embed=discord.Embed(title=f"{version} HiQ", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"HiQ:\n\nhttps://qutvirtual4.qut.edu.au/group/student/home", color=discord.Color.dark_blue())
+    embed.set_thumbnail(url="https://qutvirtual4.qut.edu.au/image/image_gallery?uuid=acca9ca6-6d8c-4643-9351-d2f2c2b450eb&groupId=13901&filename=HiQlogo.jpg&t=1581892242556")
     await ctx.send(embed=embed)
   
 # Commands for verification
@@ -91,23 +123,9 @@ class Verify(commands.Cog):
     help="Command to provide information about how to verify your account"
   )
   async def _info(self, ctx):
-    embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
+    embed=discord.Embed(title="Verification Instructions", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
-# commands for update related things
-class Update(commands.Cog):
-  """Update commands"""
-  @commands.command(
-    name="changelog",
-    brief="Shows the changelog",
-    help="Command to show all the changes in the current version of QUTBot"
-  )
-  async def _info(self, ctx):
-    global version
-    global changelog
-    embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
-    await ctx.send(embed=embed)
-
 
 #class Verification(commands.Cog):
 #  """All Verification Commands"""
@@ -227,14 +245,16 @@ async def status_loop():
 async def on_ready():
   global version
   global changelog
-  guild = bot.get_guild(943354154129190922) # QUT server
-  #guild = bot.get_guild(953551552562475048) # test server
+  #guild = bot.get_guild(943354154129190922) # QUT server
+  guild = bot.get_guild(953551552562475048) # test server
   print("I'm in")
   
   # Sends changelog in announcements
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
   if announcements and announcements.permissions_for(guild.me).send_messages:
     embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
+    embed.set_author(name="Emmey", icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
     await announcements.send(embed=embed)
     
   # Begins the status changing
@@ -263,8 +283,10 @@ def run():
   bot.add_cog(Moderation(bot))
   #bot.add_cog(Verification(bot))
   bot.add_cog(Info(bot))
-  bot.add_cog(Update(bot))
+  #bot.add_cog(Update(bot))
   bot.add_cog(Verify(bot))
+  #bot.add_cog(Hiq(bot))
+  #bot.add_cog(Issues(bot))
   bot.run(token)
   client.run(token)
 
