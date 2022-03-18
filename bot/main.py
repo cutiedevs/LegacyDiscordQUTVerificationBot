@@ -67,7 +67,6 @@ class Info(commands.Cog):
     help="Command to provide information about the bot"
   )
   async def _info(self, ctx):
-<<<<<<< HEAD
         embed=discord.Embed(title="QUTBot v1.1.0", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
   
@@ -80,10 +79,6 @@ class Info(commands.Cog):
         embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
 
-=======
-        embed=discord.Embed(title="QUTBot v0.1.1", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
->>>>>>> 1765a781c413d82de090b41f2769417399585f9b
 
 #class Verification(commands.Cog):
 #  """All Verification Commands"""
@@ -172,13 +167,9 @@ async def on_message(message):
         print(removal)
         codes.pop(removal)
         old_role = discord.utils.get(member.guild.roles, name="Visitor")
-<<<<<<< HEAD
         temp_role = discord.utils.get(member.guild.roles, name="Visitor Temp")
         await member.remove_roles(old_role)
         await member.remove_roles(temp_role)
-=======
-        await member.remove_roles(old_role)
->>>>>>> 1765a781c413d82de090b41f2769417399585f9b
         role = discord.utils.get(member.guild.roles, name="Verified")
         await member.add_roles(role)
         await member.create_dm()
