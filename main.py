@@ -67,9 +67,8 @@ class Info(commands.Cog):
     help="Command to provide information about the bot"
   )
   async def _info(self, ctx):
-<<<<<<< HEAD
-        embed=discord.Embed(title="QUTBot v1.1.0", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
+    embed=discord.Embed(title="QUTBot v1.1.1", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    await ctx.send(embed=embed)
   
   @commands.command(
     name="verify",
@@ -77,13 +76,9 @@ class Info(commands.Cog):
     help="Command to provide information about how to verify your account"
   )
   async def _info(self, ctx):
-        embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
+    embed=discord.Embed(title="Verification Instructions", url="https://realdrewdata.medium.com/", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
+    await ctx.send(embed=embed)
 
-=======
-        embed=discord.Embed(title="QUTBot v0.1.1", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
->>>>>>> 1765a781c413d82de090b41f2769417399585f9b
 
 #class Verification(commands.Cog):
 #  """All Verification Commands"""
@@ -125,67 +120,61 @@ def increment():
 
 @bot.listen()
 async def on_message(message):
-    if message.author == client.user:
-        return
+  if message.author == client.user:
+    return
     
-    verify = []
+  verify = []
     
-    if re.search("^n[0-9]{8}",message.content):
-        for i in range(4):
-            verify.append(str(random.randint(0, 9)))
-        
-        verify_code = ''.join(verify)
-
-        global numb
-        j = numb
-
+  if re.search("^n[0-9]{8}",message.content):
+    for i in range(4):
+      verify.append(str(random.randint(0, 9)))
       
-        sender = 'discordbotforin01@gmail.com'
-        receiver = message.content + '@qut.edu.au'
-        #receiver = 'discordbotforin01@gmail.com'
-        body_send = "your verification code is: " + verify_code
+    verify_code = ''.join(verify)
 
-        msg = MIMEText(body_send, 'html')
-        msg['Subject'] = 'Verification'
-        msg['From'] = sender
-        msg['To'] = receiver
-        s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
-        s.login(user = sender, password = os.getenv('GMAILPASS'))
-        s.sendmail(sender, receiver, msg.as_string())
-        s.quit()
-        
-        codes.append(f"{verify_code}")
-        print(codes)
-        increment()
-        
-        response = "Verification code sent to your QUT student email"
-        await message.channel.send(response)
-        print(f'{verify} is the code')
-    elif message.content == 'raise-exception':
-        raise discord.DiscordException
+    global numb
+    j = numb
 
-    if re.search("[0-9]{4}",message.content):
-      print("recieved")
-      if message.content in codes:
-        member = message.author
-        removal = codes.index(message.content)
-        print(removal)
-        codes.pop(removal)
-        old_role = discord.utils.get(member.guild.roles, name="Visitor")
-<<<<<<< HEAD
-        temp_role = discord.utils.get(member.guild.roles, name="Visitor Temp")
-        await member.remove_roles(old_role)
-        await member.remove_roles(temp_role)
-=======
-        await member.remove_roles(old_role)
->>>>>>> 1765a781c413d82de090b41f2769417399585f9b
-        role = discord.utils.get(member.guild.roles, name="Verified")
-        await member.add_roles(role)
-        await member.create_dm()
-        await member.dm_channel.send(
-          f'Hi there! Thank you for verifying your account, welcome to the server :)'
-        )
-        
+    
+    sender = 'discordbotforin01@gmail.com'
+    receiver = message.content + '@qut.edu.au'
+    #receiver = 'discordbotforin01@gmail.com'
+    body_send = "your verification code is: " + verify_code
+
+    msg = MIMEText(body_send, 'html')
+    msg['Subject'] = 'Verification'
+    msg['From'] = sender
+    msg['To'] = receiver
+    s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+    s.login(user = sender, password = os.getenv('GMAILPASS'))
+    s.sendmail(sender, receiver, msg.as_string())
+    s.quit()
+    
+    codes.append(f"{verify_code}")
+    print(codes)
+    increment()
+    
+    response = "Verification code sent to your QUT student email"
+    await message.channel.send(response)
+    print(f'{verify} is the code')
+  elif message.content == 'raise-exception':
+    raise discord.DiscordException
+
+  if re.search("[0-9]{4}",message.content):
+    print("recieved")
+    if message.content in codes:
+      member = message.author
+      removal = codes.index(message.content)
+      print(removal)
+      codes.pop(removal)
+      old_role = discord.utils.get(member.guild.roles, name="Visitor")
+      await member.remove_roles(old_role)
+      role = discord.utils.get(member.guild.roles, name="Verified")
+      await member.add_roles(role)
+      await member.create_dm()
+      await member.dm_channel.send(
+        f'Hi there! Thank you for verifying your account, welcome to the server :)'
+      )
+      
 
 @bot.event
 async def on_ready():
@@ -193,9 +182,9 @@ async def on_ready():
 
 @bot.event
 async def on_guild_join(guild):
-    general = find(lambda x: x.name == 'general-general',  guild.text_channels)
-    if general and general.permissions_for(guild.me).send_messages:
-        await general.send("Hi there! I'm QUTBot, I don't have many features right now, but I hope you'll help me grow :D")
+  general = find(lambda x: x.name == 'general-general',  guild.text_channels)
+  if general and general.permissions_for(guild.me).send_messages:
+    await general.send("Hi there! I'm QUTBot, I don't have many features right now, but I hope you'll help me grow :D")
 
 @bot.event 
 async def on_member_join(member):
@@ -203,8 +192,8 @@ async def on_member_join(member):
   await member.add_roles(role)
   await member.create_dm()
   await member.dm_channel.send(
-f'{member.mention} Please send your QUT student number in #visitor (E.g: "n12345678"), then send the verification code that will be emailed to you.\n\n**Do Not Respond To This Message**'
-        )
+    f'{member.mention} Please send your QUT student number in #visitor (E.g: "n12345678"), then send the verification code that will be emailed to you.\n\n**Do Not Respond To This Message**'
+  )
   
 def run():
   bot.add_cog(Moderation(bot))
