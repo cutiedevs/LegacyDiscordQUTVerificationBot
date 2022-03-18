@@ -67,7 +67,7 @@ class Info(commands.Cog):
     help="Command to provide information about the bot"
   )
   async def _info(self, ctx):
-    embed=discord.Embed(title="QUTBot v1.2.1", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed=discord.Embed(title="QUTBot v1.2.2", url="https://realdrewdata.medium.com/", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
   
 class Verify(commands.Cog):
