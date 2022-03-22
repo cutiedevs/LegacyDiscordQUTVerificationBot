@@ -19,6 +19,13 @@ from discord.utils import find
 from discord.ext.commands import Bot
 
 from discord.ext import tasks
+
+import aiohttp
+import json
+import jsonpickle
+from json import JSONEncoder
+
+from configparser import *
 ### End Libraries ###
 
 
@@ -41,12 +48,23 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
-version = "QUTBot v1.3.0"
-changelog = "- Fixed a minor bug with the status\n- Added comments for better source code readability\n- Added a new phrase to the status\n- Added command to link to issues page on GitHub\n- Added command to link straight to HiQ\n- Fixed links in embeds\n- Added tumbnails to embeds that need them\n- Restructured commands\n- Added an author to the changelog\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+config = ConfigParser()
+
+version = "QUTBot v1.3.1"
+changelog = "- Adjusted verification regex\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 #moderation commands
 class Moderation(commands.Cog):
   """All Moderation Commands"""
+  
+  def __init__(self, discord_token: str) -> None:
+        self.base_api_url = 'https://discord.com/api/v8'
+        self.auth_headers = {
+            'Authorization':f'Bot {token}',
+            'User-Agent':'DiscordBot (https://discord.com/api/oauth2/authorize?client_id=953211624066539541&permissions=8&scope=bot) Python/3.10 aiohttp/3.8.1',
+            'Content-Type':'application/json'
+        }
+
   @commands.command(
     name="test",
     brief="test",
@@ -55,6 +73,46 @@ class Moderation(commands.Cog):
   async def _test(self, ctx):
     num = random.randint(1,100)
     await ctx.send(f"{ctx.message.author.mention} your number is {num}")
+  
+  #@commands.command(
+  #  name="events",
+  #  brief="Make an event",
+  #  help="Command to create an event"
+  #)
+  #async def create_guild_event(
+  #      self,
+  #      guild_id: str,
+  #      event_name: str,
+  #      event_description: str,
+  #      event_start_time: str,
+  #      event_end_time: str,
+  #      event_metadata: str,
+  #      event_privacy_level=2,
+  #      channel_id=None
+  #  ) -> None:
+  #      '''Creates a guild event using the supplied arguments
+  #      The expected event_metadata format is event_metadata={'location': 'YOUR_LOCATION_NAME'}
+  #      The required time format is %Y-%m-%dT%H:%M:%S'''
+  #      event_create_url = f'{self.base_api_url}/guilds/{guild_id}/scheduled-events'
+  #      event_data = json.dumps({
+  #          'name': event_name,
+  #          'privacy_level': event_privacy_level,
+  #          'scheduled_start_time': event_start_time,
+  #          'scheduled_end_time': event_end_time,
+  #          'description': event_description,
+  #          'channel_id': channel_id,
+  #          'entity_metadata': {'location': f'{event_metadata}'},
+  #          'entity_type': 3
+  #      })
+  #      async with aiohttp.ClientSession(headers=self.auth_headers) as session:
+  #          try:
+  #              async with session.post(event_create_url, data=event_data) as response:
+  #                  response.raise_for_status()
+  #                  assert response.status == 200
+  #          except Exception as e:
+  #              print(f'EXCEPTION: {e}')
+  #          finally:
+  #              await session.close()
 
   #@commands.command(
   #  name='clear',
@@ -174,7 +232,7 @@ async def on_message(message):
   verify = []
     
   # listen for a student number
-  if re.search("^n[0-9]{6,12}",message.content):
+  if re.search("^[Nn][0-9]{6,12}",message.content):
     for i in range(4):
       # generate random unique verification code
       verify.append(str(random.randint(0, 9)))
@@ -251,6 +309,7 @@ async def on_ready():
   
   # Sends changelog in announcements
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
+  messages = await announcements.history(limit=4).flatten()
   if announcements and announcements.permissions_for(guild.me).send_messages:
     embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
