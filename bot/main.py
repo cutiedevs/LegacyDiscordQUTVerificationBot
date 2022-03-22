@@ -20,12 +20,12 @@ from discord.ext.commands import Bot
 
 from discord.ext import tasks
 
-import aiohttp
-import json
-import jsonpickle
-from json import JSONEncoder
+#import aiohttp
+#import json
+#import jsonpickle
+#from json import JSONEncoder
 
-from configparser import *
+#from configparser import *
 ### End Libraries ###
 
 
