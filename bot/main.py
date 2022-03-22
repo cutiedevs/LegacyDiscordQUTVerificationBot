@@ -48,7 +48,6 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
-config = ConfigParser()
 
 version = "QUTBot v1.3.1"
 changelog = "- Adjusted verification regex\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
