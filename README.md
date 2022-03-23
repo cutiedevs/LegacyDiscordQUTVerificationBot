@@ -10,8 +10,8 @@ Built on discord.py
 
 * Post the changelog in announcements channel
 
-## Planned features
-
 * General Discord moderation
+
+## Planned features
 
 * Assigning roles according to units
