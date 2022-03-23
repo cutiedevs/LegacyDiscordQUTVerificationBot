@@ -19,13 +19,6 @@ from discord.utils import find
 from discord.ext.commands import Bot
 
 from discord.ext import tasks
-
-#import aiohttp
-#import json
-#import jsonpickle
-#from json import JSONEncoder
-
-#from configparser import *
 ### End Libraries ###
 
 
@@ -36,7 +29,7 @@ intents = discord.Intents.all()
 
 nav = DefaultMenu(page_left="◀️", page_right="▶️", remove="❌")
 
-ending_note = "{ctx.bot.user.name} is not affiliated with QUT"
+ending_note = f"QUTBot is not affiliated with QUT"
 
 bot = commands.Bot(command_prefix="qut!", description="A bot to help with QUT servers", intents=intents)
 client = discord.Client
@@ -48,9 +41,18 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
+guild = bot.get_guild(943354154129190922) # QUT server
+#guild = bot.get_guild(953551552562475048) # test server
 
-version = "QUTBot v1.3.1"
-changelog = "- Adjusted verification regex\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.4.0"
+changelog = "**The Moderation update**\n- Added mute command\n- Added un-mute command\n- Added clear chat command\n- Added ban command\n- Added un-ban command\n- Added kick command\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please pass in all requirements :rolling_eyes:')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You don't have all the requirements :angry:")
 
 #moderation commands
 class Moderation(commands.Cog):
@@ -65,65 +67,77 @@ class Moderation(commands.Cog):
         }
 
   @commands.command(
-    name="test",
-    brief="test",
-    help="test"
+    name="mute",
+    brief="Mute a member",
+    help="Command to mute an unruly server member"
   )
-  async def _test(self, ctx):
-    num = random.randint(1,100)
-    await ctx.send(f"{ctx.message.author.mention} your number is {num}")
-  
-  #@commands.command(
-  #  name="events",
-  #  brief="Make an event",
-  #  help="Command to create an event"
-  #)
-  #async def create_guild_event(
-  #      self,
-  #      guild_id: str,
-  #      event_name: str,
-  #      event_description: str,
-  #      event_start_time: str,
-  #      event_end_time: str,
-  #      event_metadata: str,
-  #      event_privacy_level=2,
-  #      channel_id=None
-  #  ) -> None:
-  #      '''Creates a guild event using the supplied arguments
-  #      The expected event_metadata format is event_metadata={'location': 'YOUR_LOCATION_NAME'}
-  #      The required time format is %Y-%m-%dT%H:%M:%S'''
-  #      event_create_url = f'{self.base_api_url}/guilds/{guild_id}/scheduled-events'
-  #      event_data = json.dumps({
-  #          'name': event_name,
-  #          'privacy_level': event_privacy_level,
-  #          'scheduled_start_time': event_start_time,
-  #          'scheduled_end_time': event_end_time,
-  #          'description': event_description,
-  #          'channel_id': channel_id,
-  #          'entity_metadata': {'location': f'{event_metadata}'},
-  #          'entity_type': 3
-  #      })
-  #      async with aiohttp.ClientSession(headers=self.auth_headers) as session:
-  #          try:
-  #              async with session.post(event_create_url, data=event_data) as response:
-  #                  response.raise_for_status()
-  #                  assert response.status == 200
-  #          except Exception as e:
-  #              print(f'EXCEPTION: {e}')
-  #          finally:
-  #              await session.close()
+  @commands.has_permissions(manage_messages=True)
+  async def _mute(self, ctx, member: discord.Member):
+    muted_role = discord.utils.get(member.guild.roles, name="Muted")
 
-  #@commands.command(
-  #  name='clear',
-  #  brief='Clears messages',
-  #  help='this command will clear msgs'
-  #)
-  #async def clear(ctx, number):
-  #  mgs = [] #Empty list to put all the messages in the log
-  #  number = int(number) #Converting the amount of messages to delete to an integer
-  #  async for x in Client.logs_from(ctx.message.channel, limit = number):
-  #      mgs.append(x)
-  #  await Client.delete_messages(mgs)
+    await member.add_roles(muted_role)
+    await member.send(f"You have been muted from: - {ctx.guild.name}")
+    embed = discord.Embed(title=f"{version} Mute", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"Muted-{member.mention}",colour=discord.Colour.dark_blue())
+    await ctx.send(embed=embed)
+  
+  @commands.command(
+    name="unmute",
+    brief="Un-mute a member",
+    help="Command to Un-mute a server member"
+  )
+  @commands.has_permissions(manage_messages=True)
+  async def _unmute(self, ctx, member: discord.Member):
+    mutedRole = discord.utils.get(member.guild.roles, name="Muted")
+
+    await member.remove_roles(mutedRole)
+    await member.send(f"you have been un-muted from: - {ctx.guild.name}")
+    embed = discord.Embed(title=f"{version} Unmute", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"Un-muted-{member.mention}",colour=discord.Colour.dark_blue())
+    await ctx.send(embed=embed)
+  
+  @commands.command(
+    name="clear",
+    brief="Clear chat",
+    help="Command for moderators to automatically clear chat"
+  )
+  @commands.has_role('Moderator')
+  async def _clear(self, ctx, amount: int):
+    await ctx.channel.purge(limit=amount)
+  
+  @commands.command(
+    name="ban",
+    brief="Ban a member",
+    help="Command to ban a member from the discord"
+    )
+  @commands.has_permissions(ban_members = True)
+  async def _ban(self, ctx, member : discord.Member, *, reason = None):
+      await member.ban(reason = reason)
+  
+  @commands.command(
+    name="unban",
+    brief="Un-ban a user",
+    help="Command to un-ban a user"
+  )
+  @commands.has_permissions(administrator = True)
+  async def _unban(self, ctx, *, member):
+      banned_users = await ctx.guild.bans()
+      member_name, member_discriminator = member.split("#")
+
+      for ban_entry in banned_users:
+          user = ban_entry.user
+
+          if (user.name, user.discriminator) == (member_name, member_discriminator):
+              await ctx.guild.unban(user)
+              await ctx.send(f'Unbanned {user.mention}')
+              return
+  
+  @commands.command(
+    pass_context = True,
+    name="kick",
+    brief="Kick a member",
+    help="Command to kick a member from the server"
+  )
+  async def _kick(self, ctx, userName: discord.User):
+    await bot.kick(userName)
 
 # commands for information
 class Info(commands.Cog):
@@ -135,7 +149,7 @@ class Info(commands.Cog):
   )
   async def _info(self, ctx):
     global version
-    embed=discord.Embed(title="f{version}", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
+    embed=discord.Embed(title=f"{version}", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"This bot was designed and programmed by *Emmey Leo* for the QUT IN01 Discord. It provides a system to verify that new members are qut students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**", color=discord.Color.dark_blue())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
     await ctx.send(embed=embed)
     
@@ -171,48 +185,50 @@ class Info(commands.Cog):
     embed.set_thumbnail(url="https://qutvirtual4.qut.edu.au/image/image_gallery?uuid=acca9ca6-6d8c-4643-9351-d2f2c2b450eb&groupId=13901&filename=HiQlogo.jpg&t=1581892242556")
     await ctx.send(embed=embed)
   
-# Commands for verification
-class Verify(commands.Cog):
-  """Verification commands"""
+  @commands.command(
+    name="tones",
+    brief="Tone Tags resource",
+    help="Command to get help for understanding tone tags"
+  )
+  async def _hiq(self, ctx):
+    embed=discord.Embed(title=f"{version} Tone Tags", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"A useful guide for tone tags:\n\nhttps://toneindicators.carrd.co/", color=discord.Color.dark_blue())
+    await ctx.send(embed=embed)
+
+class Verification(commands.Cog):
+  """All Verification Commands"""
   @commands.command(
     name="verify",
     brief="Instructions on how to verify",
     help="Command to provide information about how to verify your account"
   )
+  @commands.has_role('Moderator')
   async def _info(self, ctx):
     embed=discord.Embed(title="Verification Instructions", url="https://github.com/Mistyttm/DiscordQUTVerificationBot", description=f"1. Go to #verification\n2. Send your student number e.g. n12345678\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification", color=discord.Color.dark_blue())
     await ctx.send(embed=embed)
-  
+    
+  @commands.command(
+    name="clearcodes",
+    brief="Clears verification codes",
+    help="This command removes all stored verification codes, users who have not used their code will need another one"
+  )
+  @commands.has_role('Moderator')
+  async def _removeCodes(self, ctx):
+    global codes
+    codes.clear()
+    print(codes)
+    await ctx.send("All verification codes have been deleted")
 
-#class Verification(commands.Cog):
-#  """All Verification Commands"""
-#  @commands.command(
-#    name="clearcodes",
-#    brief="Clears verification codes",
-#    help="This command removes all stored verification codes, users who have not used their code will need another one"
-#  )
-#  async def _removeCodes(self, ctx):
-#    global codes
-#    codes.clear()
-#    print(codes)
-#    await ctx.send("All verification codes have been deleted")
-
-#  @commands.command(
-#    name="addcode",
-#    brief="Adds a custom code",
-#    help="This command adds a custom 4 number code for moderators to give out"
-#  )
-#  async def _addCodes(self, ctx, arg,):
-#    global codes
-#    role = discord.utils.find(lambda r: r.name == 'Moderator', ctx.message.guild.roles)
-#    if len(arg) == 4 and role in self.roles:
-#      codes.append(arg)
-#      print(codes)
-#      await ctx.send(f"Your custom code is: {arg}")
-#    elif role not in self.roles:
-#      await ctx.send(f"You cannot use this command")
-#    else:
-#        await ctx.send(f"That is an incorrectly formatted code")
+  @commands.command(
+    name="addcode",
+    brief="Adds a custom code",
+    help="This command adds a custom 4 number code for moderators to give out"
+  )
+  @commands.has_role('Moderator')
+  async def _addCodes(self, ctx, arg,):
+    global codes
+    codes.append(arg)
+    print(codes)
+    await ctx.send(f"Your custom code is: {arg}")
 
 numb = 0
 
@@ -245,7 +261,7 @@ async def on_message(message):
     sender = 'discordbotforin01@gmail.com'
     receiver = message.content + '@qut.edu.au'
     #receiver = 'discordbotforin01@gmail.com'
-    body_send = "your verification code is: " + verify_code
+    body_send = "your one-time verification code is: " + verify_code
 
     msg = MIMEText(body_send, 'html')
     msg['Subject'] = 'Verification'
@@ -308,7 +324,6 @@ async def on_ready():
   
   # Sends changelog in announcements
   announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
-  messages = await announcements.history(limit=4).flatten()
   if announcements and announcements.permissions_for(guild.me).send_messages:
     embed=discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
@@ -339,12 +354,8 @@ async def on_member_join(member):
 # Runs everything
 def run():
   bot.add_cog(Moderation(bot))
-  #bot.add_cog(Verification(bot))
+  bot.add_cog(Verification(bot))
   bot.add_cog(Info(bot))
-  #bot.add_cog(Update(bot))
-  bot.add_cog(Verify(bot))
-  #bot.add_cog(Hiq(bot))
-  #bot.add_cog(Issues(bot))
   bot.run(token)
   client.run(token)
 
