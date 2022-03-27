@@ -19,6 +19,8 @@ from discord.utils import find
 from discord.ext.commands import Bot
 
 from discord.ext import tasks
+
+import configparser
 ### End Libraries ###
 
 
@@ -41,11 +43,13 @@ token = os.getenv("DISCORD_TOKEN")
 
 codes = []
 
-guild = bot.get_guild(943354154129190922) # QUT server
-#guild = bot.get_guild(953551552562475048) # test server
+#guild = bot.get_guild(943354154129190922) # QUT server
+guild = bot.get_guild(953551552562475048) # test server
 
-version = "QUTBot v1.4.0"
-changelog = "**The Moderation update**\n- Added mute command\n- Added un-mute command\n- Added clear chat command\n- Added ban command\n- Added un-ban command\n- Added kick command\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.4.1"
+changelog = "\n- Adjusted verification email\n- Added automatic clearing of #verification\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+
+config = configparser.ConfigParser()
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -259,9 +263,9 @@ async def on_message(message):
 
     # Code to email the verification code
     sender = 'discordbotforin01@gmail.com'
-    receiver = message.content + '@qut.edu.au'
-    #receiver = 'discordbotforin01@gmail.com'
-    body_send = "your one-time verification code is: " + verify_code
+    #receiver = message.content + '@qut.edu.au'
+    receiver = 'discordbotforin01@gmail.com'
+    body_send = "your one-time verification code for the IN01 Discord is: " + verify_code
 
     msg = MIMEText(body_send, 'html')
     msg['Subject'] = 'Verification'
@@ -298,6 +302,7 @@ async def on_message(message):
       role = discord.utils.get(member.guild.roles, name="Verified")
       await member.add_roles(role)
       await message.channel.send(f'User Verified')
+      await message.channel.purge(limit=5)
       await member.create_dm()
       await member.dm_channel.send(
         f'Hi there! Thank you for verifying your account, welcome to the server :)'
@@ -318,8 +323,8 @@ async def status_loop():
 async def on_ready():
   global version
   global changelog
-  guild = bot.get_guild(943354154129190922) # QUT server
-  #guild = bot.get_guild(953551552562475048) # test server
+  #guild = bot.get_guild(943354154129190922) # QUT server
+  guild = bot.get_guild(953551552562475048) # test server
   print("I'm in")
   
   # Sends changelog in announcements
