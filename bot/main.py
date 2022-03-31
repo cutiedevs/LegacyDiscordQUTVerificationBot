@@ -304,34 +304,75 @@ async def on_message(message: discord.Message):
             receiver = f"{student_number[0]}@qut.edu.au"
         # receiver = 'discordbotforin01@gmail.com'
 
-# Verification function
-@bot.listen()
-async def on_message(message):
-    if message.author == client.user:
-        return
+        body_send = f'''<html><head><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    .main_container {{
+        padding: 0 10rem;
+        font-family: 'Open Sans', sans-serif;
+    }}
 
-    verify = []
+    .heading_text {{
+        margin: 0.8rem 0;
+        font-weight: 600;
+        font-size: 3.5rem;
+    }}
 
-    # listen for a student number
-    if re.search("^[Nn][0-9]{6,12}", message.content):
-        for i in range(4):
-            # generate random unique verification code
-            verify.append(str(random.randint(0, 9)))
+    .main_text {{
+        margin: 1em 0;
+        font-weight: 400;
+        font-size: 1.5rem;
+    }}
 
-        verify_code = ''.join(verify)
+    .verification_code {{
+        padding: 0 32px;
+        font-family: JetBrains Mono, sans-serif;
+        font-size: 112px;
+        line-height: 1;
+        color: #020202;
+        font-weight: bold;
+        letter-spacing: 5px;
+        text-align: center;
+    }}
 
-        global numb
-        j = numb
+    .footer_text {{
+        margin: 3em 0;
+        font-weight: 400;
+        font-size: 1rem;
+    }}
 
-        # Code to email the verification code
-        sender = 'discordbotforin01@gmail.com'
-        receiver = message.content + '@qut.edu.au'
-        #receiver = 'discordbotforin01@gmail.com'
-        body_send = "your one-time verification code for the IN01 Discord is: " + verify_code
+</style>
+</head>
+<body>
+<div class="main_container">
+    <div class="heading_text">
+        Your verification code for {message.guild.name}
+    </div>
+    <div class="main_text">
+        Hi <strong style="font-weight:600;">{message.author}</strong>,<br>
+        Your verification code is:
+    </div>
+    <div class="verification_code">
+        {verification_code}
+    </div>
+    <div class="footer_text" style="text-align: center;">
+        Thank you for using our bot.
+    </div>
+    <hr>
+    <div class="footer_text">
+        You are receiving this message because this student number was
+        used to verify a Discord account. If you did not request this 
+        code please disregard this message.
+    </div>
+</div>
+</body>
+</html>'''
 
+        # Setup email
         msg = MIMEText(body_send, 'html')
-        msg['Subject'] = 'Verification'
-        msg['From'] = sender
+        msg['Subject'] = 'Discord Verification Code'
+        msg['From'] = formataddr(('QUTBot', sender))
         msg['To'] = receiver
         
         s = SMTP_SSL(host='smtp.gmail.com', port=465)
