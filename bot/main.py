@@ -359,10 +359,8 @@ async def on_ready():
     announcements = find(lambda x: x.name == 'announcements',  guild.text_channels)
     if announcements and announcements.permissions_for(guild.me).send_messages:
         embed = discord.Embed(title=f"{version} Changelog", url="https://realdrewdata.medium.com/", description=f"{changelog}", color=discord.Color.dark_blue())
-        embed.set_thumbnail(
-            url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
-        embed.set_author(
-            name="Emmey", icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
+        embed.set_author(name="Emmey", icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
         await announcements.send(embed=embed)
 
     # Begins the status changing
