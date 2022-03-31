@@ -371,7 +371,8 @@ async def on_ready():
 
 # Runs when the bot joins a server
 
-
+# this is just a commment to test why shit aint wortking
+# this is just a commment to test why shit aint wortking
 @bot.event
 async def on_guild_join(guild):
     general = find(lambda x: x.name == 'general-general',  guild.text_channels)
