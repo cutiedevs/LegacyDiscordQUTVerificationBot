@@ -23,30 +23,31 @@ from email.mime.text import MIMEText
 # import ifb102_quiz_1 as q
 ### End Libraries ###
 
+# Load environment variables
+load_dotenv()
 
-# Global variables
-SKIP_BOTS = False
+# Discord API token
+token = getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.all()
 
-nav = DefaultMenu(page_left="◀️", page_right="▶️", remove="❌")
-
-ending_note = f"QUTBot is not affiliated with QUT"
-
-bot = commands.Bot(command_prefix="qut!", description="A bot to help with QUT servers", intents=intents)
+# Client
 client = discord.Client
-Client = Bot('qut!')
+# Client = Bot('qut!')
 
+# Guild
+guild = bot.get_guild(int(getenv("GUILD_ID")))
+
+# Embed customisation
+nav = DefaultMenu(page_left="◀️", page_right="▶️", remove="❌")
+ending_note = f"QUTBot is not affiliated with QUT"
 bot.help_command = PrettyHelp(
     menu=nav, color=discord.Colour.blue(), ending_note=ending_note)
 
-token = os.getenv("DISCORD_TOKEN")
-
+# Verification codes
 codes = []
 
-guild = bot.get_guild(943354154129190922) # QUT server
-#guild = bot.get_guild(953551552562475048)  # test server
-
+# Changelog
 version = "QUTBot v1.4.1"
 changelog = "\n- Adjusted verification email\n- Added automatic clearing of #verification\n- Fixed qut!verify\n- Randomised the status\n- Added new status messages\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
@@ -247,7 +248,10 @@ class Info(commands.Cog):
         await ctx.send(embed=embed)
 
 
-numb = 0
+    # Message must be sent in verification channel    
+    verification_channel = bot.get_channel(int(getenv("VERIFICATION_CHANNEL_ID")))
+    if message.channel.id != verification_channel.id:
+        return
 
 
 def increment():
@@ -284,8 +288,9 @@ async def on_message(message):
         msg['Subject'] = 'Verification'
         msg['From'] = sender
         msg['To'] = receiver
-        s = smtplib.SMTP_SSL(host='smtp.gmail.com', port=465)
-        s.login(user=sender, password=os.getenv('GMAILPASS'))
+        
+        s = SMTP_SSL(host='smtp.gmail.com', port=465)
+        s.login(user=sender, password=getenv('GMAILPASS'))
         s.sendmail(sender, receiver, msg.as_string())
         s.quit()
 
@@ -337,8 +342,7 @@ async def status_loop():
 async def on_ready():
     global version
     global changelog
-    guild = bot.get_guild(943354154129190922) # QUT server
-    #guild = bot.get_guild(953551552562475048)  # test server
+    guild = bot.get_guild(int(getenv("GUILD_ID")))
     print("I'm in")
     # print(changelog_sent)
 
