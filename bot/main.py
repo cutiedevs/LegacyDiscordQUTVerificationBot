@@ -379,19 +379,30 @@ async def on_message(message: discord.Message):
         s.login(user=sender, password=getenv('GMAILPASS'))
         s.sendmail(sender, receiver, msg.as_string())
         s.quit()
+        
+        # Delete message from user
+        await message.delete()
+
+        codes.append([verification_code, message.author])
 
         print("Active verification codes:")
         print(codes)
 
         response = f"{message.author.mention} A verification code has been sent to your QUT student email"
         await message.channel.send(response)
-        print(f'{verify} is the code')
-    elif message.content == 'raise-exception':
-        raise discord.DiscordException
+
+    # Check if codes are ready to be verified
+    if not codes:
+        return
 
     # Listens for the verification code
     verification_code = findall(r"([0-9]{4})", message.content)
     if verification_code:
+        # Ensure that the user provides the correct code
+        if [verification_code[0], message.author] in codes:
+            print(f"Received verification code from {message.author}")
+            codes.pop(codes.index([verification_code[0], message.author]))
+
             member = message.author
             
             # Remove visitor role
@@ -399,6 +410,7 @@ async def on_message(message: discord.Message):
                 member.guild.roles, name="Visitor")
             temp_role = discord.utils.get(
                 member.guild.roles, name="Visitor Temp")
+
             await member.remove_roles(old_role)
             await member.remove_roles(temp_role)
 
