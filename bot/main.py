@@ -1,31 +1,26 @@
 ### Libraries ###
 import discord
 from discord.ext import commands
+from discord.utils import get
+from discord.utils import find
+from discord.ext import tasks
+
 from pretty_help import DefaultMenu, PrettyHelp
-from random import *
 #import ifb102_quiz_1 as q
 
 from asyncio import sleep
-import os
-import random
-import re
 
-import smtplib
-import ssl
+from os import getenv
+from dotenv import load_dotenv
+
+from re import findall
+from random import randint
+
+from smtplib import SMTP_SSL
+from email.utils import formataddr
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
-from email.mime.multipart import MIMEMultipart
 
-from discord.utils import get
-from discord.utils import find
-from discord.ext.commands import Bot
-
-from discord.ext import tasks
-
-#import configparser
-
-# import flashcards
+# import ifb102_quiz_1 as q
 ### End Libraries ###
 
 
