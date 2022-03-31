@@ -417,8 +417,8 @@ async def on_ready():
 
 # Runs when the bot joins a server
 
-# this is just a commment to test why shit aint wortking
-# this is just a commment to test why shit aint wortking
+# this is just a comment to test why shit ain't wortking
+# this is just a comment to test why shit ain't wortking
 @bot.event
 async def on_guild_join(guild: discord.Guild):
     general = find(lambda x: x.name ==
