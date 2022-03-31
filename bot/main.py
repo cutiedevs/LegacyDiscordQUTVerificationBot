@@ -297,6 +297,12 @@ async def on_message(message: discord.Message):
         # Code to email the verification code
         sender = 'discordbotforin01@gmail.com'
         
+        # Check if 'n' was given in message
+        if student_number[0][0].lower() != 'n':
+            receiver = f"n{student_number[0]}@qut.edu.au"
+        else:
+            receiver = f"{student_number[0]}@qut.edu.au"
+        # receiver = 'discordbotforin01@gmail.com'
 
 # Verification function
 @bot.listen()
