@@ -357,10 +357,12 @@ async def on_message(message):
             await message.delete()
 
             await member.create_dm()
-            await member.dm_channel.send(
-                f'Hi there! Thank you for verifying your account, welcome to the server :)'
-            )
-
+            try:
+                await member.dm_channel.send(
+                    f'Hi there! Thank you for verifying your account, welcome to the server :)'
+                )
+            except discord.errors.Forbidden:
+                print(f"{message.author} has disabled dms from server members")
 
 # Loop to change the status
 @tasks.loop(seconds=180)
@@ -431,10 +433,15 @@ async def on_guild_join(guild: discord.Guild):
 async def on_member_join(member: discord.Member):
     role = get(member.guild.roles, name="Visitor")
     await member.add_roles(role)
+
     await member.create_dm()
-    await member.dm_channel.send(
+    try:
+        await member.dm_channel.send(
             f'{member.mention} Please send your QUT student number in #visitor (E.g. "n12345678"), then send the verification code that will be emailed to you.\n\n**Do Not Respond To This Message**'
         )
+    except discord.errors.Forbidden:
+        print(f"{member.name} has disabled dms from server members")
+
 
 # Runs everything
 def run():
