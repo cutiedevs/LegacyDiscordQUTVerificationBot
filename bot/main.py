@@ -383,7 +383,7 @@ async def on_message(message: discord.Message):
         print("Active verification codes:")
         print(codes)
 
-        response = "Verification code sent to your QUT student email"
+        response = f"{message.author.mention} A verification code has been sent to your QUT student email"
         await message.channel.send(response)
         print(f'{verify} is the code')
     elif message.content == 'raise-exception':
