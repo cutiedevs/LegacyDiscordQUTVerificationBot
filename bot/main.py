@@ -279,6 +279,9 @@ class Info(commands.Cog):
 # Verification function
 @bot.listen()
 async def on_message(message: discord.Message):
+    # Ignore bot messages
+    if message.author.bot:
+        return
 
     # Message must be sent in verification channel    
     verification_channel = bot.get_channel(int(getenv("VERIFICATION_CHANNEL_ID")))
