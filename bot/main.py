@@ -276,6 +276,9 @@ class Info(commands.Cog):
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
 
+# Verification function
+@bot.listen()
+async def on_message(message: discord.Message):
 
     # Message must be sent in verification channel    
     verification_channel = bot.get_channel(int(getenv("VERIFICATION_CHANNEL_ID")))
@@ -425,7 +428,7 @@ async def on_guild_join(guild: discord.Guild):
 
 # assigns a new member the visitor role then DMs them
 @bot.event
-async def on_member_join(member):
+async def on_member_join(member: discord.Member):
     role = get(member.guild.roles, name="Visitor")
     await member.add_roles(role)
     await member.create_dm()
