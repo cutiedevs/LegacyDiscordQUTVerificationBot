@@ -288,6 +288,11 @@ async def on_message(message: discord.Message):
     if message.channel.id != verification_channel.id:
         return
 
+    # Listen for a student number
+    student_number = findall(r"([Nn]?[0-9]{6,12})", message.content)
+    if student_number:
+        # Generate random unique verification code
+        verification_code = f"{randint(0, 9999):04}"
 
         # Code to email the verification code
         sender = 'discordbotforin01@gmail.com'
@@ -338,9 +343,8 @@ async def on_message(message):
         raise discord.DiscordException
 
     # Listens for the verification code
-    if re.search("[0-9]{4}", message.content):
-        print("recieved")
-        if message.content in codes:
+    verification_code = findall(r"([0-9]{4})", message.content)
+    if verification_code:
             member = message.author
             
             # Remove visitor role
