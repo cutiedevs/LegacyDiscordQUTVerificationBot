@@ -51,8 +51,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.4.1"
-changelog = "\n- Adjusted verification email\n- Added automatic clearing of #verification\n- Fixed qut!verify\n- Randomised the status\n- Added new status messages\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.0"
+changelog = "\n- Verification system has been overhauled\n\nThank you to **LightninBolt74** for helping with this update :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -485,8 +485,6 @@ async def on_ready():
 
 # Runs when the bot joins a server
 
-# this is just a comment to test why shit ain't wortking
-# this is just a comment to test why shit ain't wortking
 @bot.event
 async def on_guild_join(guild: discord.Guild):
     general = find(lambda x: x.name ==
