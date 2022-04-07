@@ -49,8 +49,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.1a"
-changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n-fixed a critical bug\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.1b"
+changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n-fixed a critical bug again\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -151,7 +151,7 @@ class Moderation(commands.Cog):
         brief="Kick a member",
         help="Command to kick a member from the server"
     )
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(kick_members=True)
     async def _kick(self, ctx, userName: discord.User):
         await bot.kick(userName)
 
