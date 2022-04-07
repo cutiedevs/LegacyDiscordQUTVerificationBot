@@ -15,3 +15,9 @@ Built on discord.py
 ## Planned features
 
 * Assigning roles according to units
+
+## Contributors
+
+ * [Tarang74](https://github.com/Tarang74)
+
+ * [ben-S-lgtm](https://github.com/ben-S-lgtm)

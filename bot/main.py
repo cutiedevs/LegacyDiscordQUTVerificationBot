@@ -19,6 +19,8 @@ from smtplib import SMTP_SSL
 from email.utils import formataddr
 from email.mime.text import MIMEText
 
+import python_weather
+
 # import ifb102_quiz_1 as q
 ### End Libraries ###
 
@@ -34,10 +36,6 @@ bot = commands.Bot(
     command_prefix="qut!",
     description="A bot to help with QUT servers", intents=intents)
 
-# Client
-client = discord.Client
-# Client = Bot('qut!')
-
 # Guild
 guild = bot.get_guild(int(getenv("GUILD_ID")))
 
@@ -51,8 +49,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.0"
-changelog = "\n- Verification system has been overhauled\n\nThank you to **LightninBolt74** for helping with this update :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.1"
+changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -275,6 +273,22 @@ class Info(commands.Cog):
             description=f"A useful guide for tone tags:\n\nhttps://toneindicators.carrd.co/",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
+    
+    @commands.command(
+        name="weather",
+        brief="Tells you the weather at QUT",
+        help="A command to tell you the current weather at QUT"
+    )
+    async def _weather(self, ctx):
+        client = python_weather.Client()
+        weather = await client.find("Brisbane")
+        embed = discord.Embed(
+            title=f"{version} Weather",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            description=f"The weather currently is: {weather.current.sky_text}\nThe current temperature is: {weather.current.temperature}°C",
+            color=discord.Color.dark_blue())
+        await ctx.send(embed=embed)
+        await client.close()
 
 # Verification function
 @bot.listen()
@@ -515,7 +529,6 @@ def run():
     # bot.add_cog(Study(bot))
 
     bot.run(token)
-    client.run(token)
 
 
 if __name__ == "__main__":

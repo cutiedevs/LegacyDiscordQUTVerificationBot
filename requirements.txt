@@ -2,3 +2,4 @@ discord.py
 discord_pretty_help
 asyncio
 python-dotenv
+python_weather
