@@ -49,8 +49,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.1"
-changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.1a"
+changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n-fixed a critical bug\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
