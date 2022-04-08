@@ -50,8 +50,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.1b"
-changelog = "**The Weather Update**\n-Added qut!weather, to tell you the weather at QUT\n-fixed a critical bug again\n\nThank you **[ben-S-lgtm](https://github.com/ben-S-lgtm)** for helping with the code :)\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.2"
+changelog = "- Fuck around and find out\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -153,8 +153,21 @@ class Moderation(commands.Cog):
         help="Command to kick a member from the server"
     )
     @commands.has_permissions(kick_members=True)
-    async def _kick(self, ctx, userName: discord.User):
-        await bot.kick(userName)
+    async def _kick(self, ctx, user_name: discord.User):
+        await bot.kick(user_name)
+    
+    @commands.command(
+        name="getbitches",
+        brief="Get some bitches",
+        help="Gets you some bitches"
+    )
+    async def _bitches(self, ctx):
+        embed = discord.Embed(
+            title=f"{version} Bitches",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            colour=discord.Colour.dark_blue())
+        embed.set_image(url=f"https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F297%2F368%2F17f.jpg")
+        await ctx.send(embed=embed)
 
 
 class Verification(commands.Cog):
@@ -291,6 +304,36 @@ class Info(commands.Cog):
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
         await client.close()
+    
+    @commands.command(
+        name="ie",
+        brief="ie",
+        help="ie"
+    )
+    async def _ie(self, ctx):
+        response = ["Fuck you", "Bitch", "You're okay", "Ass face", "You look like your parents neglected you as an 8 year old", "You look like a use paper clip", "Fuck Face", "Yes I'm going to keep insulting you", "No bitches?", "Who asked", "go fuck yourself"]
+        response_rand = randrange(len(response))
+        embed = discord.Embed(
+            title=f"{version} Weather",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            description=f"{response[response_rand]}",
+            color=discord.Color.dark_blue())
+        await ctx.send(embed=embed)
+    
+    @commands.command(
+        name="e",
+        brief="e",
+        help="e"
+    )
+    async def _ie(self, ctx):
+        response = ["I love you", "You're so cool", "Keep going, you got this!!", "I believe in you", "You're amazing", "I couldn't imagine anyone better than you ^-^", "you are good enough", "Never give up friend :)"]
+        response_rand = randrange(len(response))
+        embed = discord.Embed(
+            title=f"{version} Niceness",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            description=f"{response[response_rand]}",
+            color=discord.Color.dark_blue())
+        await ctx.send(embed=embed)
 
 # Verification function
 @bot.listen()
