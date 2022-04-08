@@ -3,3 +3,8 @@
 
 logs/*
 .vscode
+
+bot/testing/*
+
+__pycache__/*
+bot/__pycache__/*
