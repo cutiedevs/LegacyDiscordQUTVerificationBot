@@ -14,7 +14,7 @@ from os import getenv
 from dotenv import load_dotenv
 
 from re import findall
-from random import randint
+from random import *
 
 from smtplib import SMTP_SSL
 from email.utils import formataddr
@@ -462,9 +462,9 @@ async def status_loop():
         "Feeling submissive and breedable", "Trans rights",
         "No sleep, only program", "Fish fear me",
         "Dreading my existence", "What is my purpose?",
-        "Prioritize being hot"]
+        "Prioritize being hot", "Lambageddon"]
 
-    status_rand = randint(0, len(status))
+    status_rand = randrange(len(status))
     await sleep(180)
     await bot.change_presence(activity=discord.Game(status[status_rand]))
 
