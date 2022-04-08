@@ -325,7 +325,7 @@ class Info(commands.Cog):
         brief="e",
         help="e"
     )
-    async def _ie(self, ctx):
+    async def _e(self, ctx):
         response = ["I love you", "You're so cool", "Keep going, you got this!!", "I believe in you", "You're amazing", "I couldn't imagine anyone better than you ^-^", "you are good enough", "Never give up friend :)"]
         response_rand = randrange(len(response))
         embed = discord.Embed(
