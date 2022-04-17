@@ -51,7 +51,7 @@ codes = []
 
 # Changelog
 version = "QUTBot v1.5.3"
-changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n- I added a stupid among us command, I'm going to go cry now\n- That first point is the important one, pay attention to it\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -205,7 +205,17 @@ class Humour(commands.Cog):
         help="ie"
     )
     async def _ie(self, ctx):
-        response = ["Fuck you", "Bitch", "You're okay", "Ass face", "You look like your parents neglected you as an 8 year old", "You look like a use paper clip", "Fuck Face", "Yes I'm going to keep insulting you", "No bitches?", "Who asked", "go fuck yourself"]
+        response = ["Fuck you", 
+                    "Bitch", 
+                    "You're okay", 
+                    "Ass face", 
+                    "You look like your parents neglected you as an 8 year old", 
+                    "You look like a use paper clip", 
+                    "Fuck Face", 
+                    "Yes I'm going to keep insulting you", 
+                    "No bitches?", 
+                    "Who asked", 
+                    "go fuck yourself"]
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Weather",
@@ -220,7 +230,14 @@ class Humour(commands.Cog):
         help="e"
     )
     async def _e(self, ctx):
-        response = ["I love you", "You're so cool", "Keep going, you got this!!", "I believe in you", "You're amazing", "I couldn't imagine anyone better than you ^-^", "you are good enough", "Never give up friend :)"]
+        response = ["I love you", 
+                    "You're so cool", 
+                    "Keep going, you got this!!", 
+                    "I believe in you", 
+                    "You're amazing", 
+                    "I couldn't imagine anyone better than you ^-^", 
+                    "you are good enough", 
+                    "Never give up friend :)"]
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Niceness",
@@ -248,11 +265,22 @@ class Humour(commands.Cog):
         help="sus"
     )
     async def _sus(self, ctx):
+        sussy = [f"https://c.tenor.com/YebbLUmkg9YAAAAC/among-us.gif", 
+                f"https://c.tenor.com/gQV5VzHLWQIAAAAd/among-us-sus.gif", 
+                f"https://c.tenor.com/vHroFuuevf0AAAAC/among-us.gif", 
+                f"https://c.tenor.com/uW6H2QV23ZwAAAAC/amogus-cry-about-it.gif", 
+                f"https://c.tenor.com/bd5bGRCMdwwAAAAd/among-us-sussy-baka-sus-check.gif", 
+                f"https://c.tenor.com/Uhpq_2f77qwAAAAC/among-us-amogus.gif", 
+                f"https://c.tenor.com/9t6T1DT0oFUAAAAM/sussy-imposter-sussy.gif", 
+                f"https://c.tenor.com/mT-5WUuvZDgAAAAd/amogus-impostor.gif", 
+                f"https://c.tenor.com/h1RL4AqIDJIAAAAC/stop-posting-about-among-us-adventure-time.gif", 
+                "My creator despises this command with her whole being", 
+                f"https://c.tenor.com/S76w2GR4HOsAAAAC/among-us-digibyte.gif"]
         embed = discord.Embed(
             title=f"{version} Amogus",
             url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
             colour=discord.Colour.dark_blue())
-        embed.set_image(url=f"https://c.tenor.com/YebbLUmkg9YAAAAC/among-us.gif")
+        embed.set_image(url=f"{sussy[randrange(len(sussy))]}")
         await ctx.send(embed=embed)
 
 class Info(commands.Cog):
