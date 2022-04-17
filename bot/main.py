@@ -50,8 +50,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.2"
-changelog = "- Fuck around and find out\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.3"
+changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -155,19 +155,6 @@ class Moderation(commands.Cog):
     @commands.has_permissions(kick_members=True)
     async def _kick(self, ctx, user_name: discord.User):
         await bot.kick(user_name)
-    
-    @commands.command(
-        name="getbitches",
-        brief="Get some bitches",
-        help="Gets you some bitches"
-    )
-    async def _bitches(self, ctx):
-        embed = discord.Embed(
-            title=f"{version} Bitches",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            colour=discord.Colour.dark_blue())
-        embed.set_image(url=f"https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F297%2F368%2F17f.jpg")
-        await ctx.send(embed=embed)
 
 
 class Verification(commands.Cog):
@@ -209,6 +196,64 @@ class Verification(commands.Cog):
         print(codes)
         await ctx.send(f"Your custom code is: {arg}")
 
+class Humour(commands.Cog):
+    """Humorous commands"""
+    
+    @commands.command(
+        name="ie",
+        brief="ie",
+        help="ie"
+    )
+    async def _ie(self, ctx):
+        response = ["Fuck you", "Bitch", "You're okay", "Ass face", "You look like your parents neglected you as an 8 year old", "You look like a use paper clip", "Fuck Face", "Yes I'm going to keep insulting you", "No bitches?", "Who asked", "go fuck yourself"]
+        response_rand = randrange(len(response))
+        embed = discord.Embed(
+            title=f"{version} Weather",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            description=f"{response[response_rand]}",
+            color=discord.Color.dark_blue())
+        await ctx.send(embed=embed)
+    
+    @commands.command(
+        name="e",
+        brief="e",
+        help="e"
+    )
+    async def _e(self, ctx):
+        response = ["I love you", "You're so cool", "Keep going, you got this!!", "I believe in you", "You're amazing", "I couldn't imagine anyone better than you ^-^", "you are good enough", "Never give up friend :)"]
+        response_rand = randrange(len(response))
+        embed = discord.Embed(
+            title=f"{version} Niceness",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            description=f"{response[response_rand]}",
+            color=discord.Color.dark_blue())
+        await ctx.send(embed=embed)
+    
+    @commands.command(
+        name="getbitches",
+        brief="Get some bitches",
+        help="Gets you some bitches"
+    )
+    async def _bitches(self, ctx):
+        embed = discord.Embed(
+            title=f"{version} Bitches",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            colour=discord.Colour.dark_blue())
+        embed.set_image(url=f"https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F297%2F368%2F17f.jpg")
+        await ctx.send(embed=embed)
+    
+    @commands.command(
+        name="sus",
+        brief="sus",
+        help="sus"
+    )
+    async def _sus(self, ctx):
+        embed = discord.Embed(
+            title=f"{version} Amogus",
+            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            colour=discord.Colour.dark_blue())
+        embed.set_image(url=f"https://c.tenor.com/YebbLUmkg9YAAAAC/among-us.gif")
+        await ctx.send(embed=embed)
 
 class Info(commands.Cog):
     """Information commands"""
@@ -285,7 +330,7 @@ class Info(commands.Cog):
         embed = discord.Embed(
             title=f"{version} Tone Tags",
             url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            description=f"A useful guide for tone tags:\n\nhttps://toneindicators.carrd.co/",
+            description=f"A useful guide for tone tags:\n\n**https://toneindicators.carrd.co/**",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
     
@@ -306,33 +351,17 @@ class Info(commands.Cog):
         await client.close()
     
     @commands.command(
-        name="ie",
-        brief="ie",
-        help="ie"
+        name="mopp",
+        brief="MOPP link",
+        help="A command to give you a link to MOPP"
     )
-    async def _ie(self, ctx):
-        response = ["Fuck you", "Bitch", "You're okay", "Ass face", "You look like your parents neglected you as an 8 year old", "You look like a use paper clip", "Fuck Face", "Yes I'm going to keep insulting you", "No bitches?", "Who asked", "go fuck yourself"]
-        response_rand = randrange(len(response))
+    async def _mopp(self, ctx):
         embed = discord.Embed(
-            title=f"{version} Weather",
+            title=f"{version} MOPP | Student Code of conduct",
             url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            description=f"{response[response_rand]}",
-            color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
-    
-    @commands.command(
-        name="e",
-        brief="e",
-        help="e"
-    )
-    async def _e(self, ctx):
-        response = ["I love you", "You're so cool", "Keep going, you got this!!", "I believe in you", "You're amazing", "I couldn't imagine anyone better than you ^-^", "you are good enough", "Never give up friend :)"]
-        response_rand = randrange(len(response))
-        embed = discord.Embed(
-            title=f"{version} Niceness",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            description=f"{response[response_rand]}",
-            color=discord.Color.dark_blue())
+            description=f"This command is being used to remind you about the QUT MOPP.\n\nIt is the student code of conduct and provides useful information on things like collusion.\n\nIf you are seeing this you should probably take a look at this page\n\n\n\n**http://www.mopp.qut.edu.au/E/E_02_01.jsp**",
+            color=discord.Color.red())
+        
         await ctx.send(embed=embed)
 
 # Verification function
@@ -571,6 +600,7 @@ def run():
     bot.add_cog(Moderation(bot))
     bot.add_cog(Info(bot))
     bot.add_cog(Verification(bot))
+    bot.add_cog(Humour(bot))
     # bot.add_cog(Study(bot))
 
     bot.run(token)
