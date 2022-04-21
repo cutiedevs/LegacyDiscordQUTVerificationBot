@@ -51,7 +51,7 @@ codes = []
 
 # Changelog
 version = "QUTBot v1.5.3"
-changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n- I added a stupid among us command, I'm going to go cry now\n- That first point is the important one, pay attention to it\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n- Fixed a bug with the verification script which didn't allow for `@Visitor Temp` to be removed\n- I changed my pfp in the changelog, I like it :3\n- All joke commands were moved into a new humour section of the commands list\n- I added a stupid among us command, I'm going to go cry now\n- QUTBot now has more compliments to give you friend :) `qut!e`\n- QUTBot also has more insults, featuring Shakespeare `qut!ie`\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -215,7 +215,14 @@ class Humour(commands.Cog):
                     "Yes I'm going to keep insulting you", 
                     "No bitches?", 
                     "Who asked", 
-                    "go fuck yourself"]
+                    "go fuck yourself",
+                    "You incomplete idiot sandwich",
+                    "You unpredictable shitbreath",
+                    "You corrupt piss monkey",
+                    "You're a dislikeable twat",
+                    "Thou puny hell-hated bladder!",
+                    "Thou artless plume-plucked horse-drench!",
+                    "You're just a fucking hexagon, aren't you? Yea, you fucking little hexagon, no one likes you hexagon piss baby. Fuck you hexagon piece of shit"]
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Weather",
@@ -237,7 +244,15 @@ class Humour(commands.Cog):
                     "You're amazing", 
                     "I couldn't imagine anyone better than you ^-^", 
                     "you are good enough", 
-                    "Never give up friend :)"]
+                    "Never give up friend :)",
+                    "Aside from food. You're my favorite.",
+                    "You're like a breath of fresh air.",
+                    "The people you love are lucky to have you in their lives.",
+                    "Actions speak louder than words, and yours tell an incredible story.",
+                    "Colors seem brighter when you're around.",
+                    "You're the coolest person I know. And I consider myself best friends with like all celebrities, so...",
+                    "You should be thanked more often. So thank you!!",
+                    "You help me feel more joy in life."]
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Niceness",
@@ -318,7 +333,7 @@ class Info(commands.Cog):
             url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
         embed.set_author(
             name="Emmey",
-            icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
+            icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
         await ctx.send(embed=embed)
 
     @commands.command(
@@ -524,11 +539,8 @@ async def on_message(message: discord.Message):
             # Remove visitor role
             old_role = discord.utils.get(
                 member.guild.roles, name="Visitor")
-            temp_role = discord.utils.get(
-                member.guild.roles, name="Visitor Temp")
 
             await member.remove_roles(old_role)
-            await member.remove_roles(temp_role)
 
             # Add verified role
             role = discord.utils.get(
@@ -592,7 +604,7 @@ async def on_ready():
             url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
         embed.set_author(
             name="Emmey",
-            icon_url="https://cdn.discordapp.com/attachments/835791348291469342/954362018884886528/IMG_20220303_125955_403.jpg")
+            icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
         await announcements.send(embed=embed)
 
     # Begins the status changing
