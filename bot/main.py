@@ -50,8 +50,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.3"
-changelog = "- Added qut!mopp. use this command when you see another student breaking the code of conduct\n- Fixed a bug with the verification script which didn't allow for `@Visitor Temp` to be removed\n- I changed my pfp in the changelog, I like it :3\n- All joke commands were moved into a new humour section of the commands list\n- I added a stupid among us command, I'm going to go cry now\n- QUTBot now has more compliments to give you friend :) `qut!e`\n- QUTBot also has more insults, featuring Shakespeare `qut!ie`\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.4"
+changelog = "- more insults\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -222,7 +222,22 @@ class Humour(commands.Cog):
                     "You're a dislikeable twat",
                     "Thou puny hell-hated bladder!",
                     "Thou artless plume-plucked horse-drench!",
-                    "You're just a fucking hexagon, aren't you? Yea, you fucking little hexagon, no one likes you hexagon piss baby. Fuck you hexagon piece of shit"]
+                    "You're just a fucking hexagon, aren't you? Yea, you fucking little hexagon, no one likes you hexagon piss baby. Fuck you hexagon piece of shit",
+                    "you're the reason elevators have a weight limit",
+                    "your neck is longer than a 3 day weekend",
+                    "Out there somewhere is a tree that produced oxygen for you to waste, please go and find that tree to apologise",
+                    "you got a treehouse in your garage named spencer",
+                    "you wanna know why you got disconnected, its because you have no connections",
+                    "Oh it's you",
+                    "I see the condom worked well",
+                    "you're so broke, you can't afford vents, you just got holes in your ceiling",
+                    "the education systems would like to apologise. it clearly failed you ",
+                    "get your tenacious tucan flamboyant flamingo lookin ass outta here",
+                    "your haircut cost 3 dark elixr",
+                    "you look like the E in the DELL logo",
+                    "i didn't know they stack shit that high",
+                    "you are not valid",
+                    "I just know you post on your private story sayin stuff like 'yo game time' and then your team looses 47 -  5"]
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Weather",
