@@ -1,4 +1,4 @@
-# QUTBot: A Discord bot for QUT servers
+# QUTBot: A Discord bot for QUT servers (DEPRECATED)
 
 Built on discord.py
 
