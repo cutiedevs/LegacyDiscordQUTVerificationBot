@@ -50,8 +50,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.4"
-changelog = "- more insults\n\nCheckout the code on Github: **https://github.com/Mistyttm/DiscordQUTVerificationBot**"
+version = "QUTBot v1.5.5"
+changelog = "We are officially moving over to Javascript! This bot will no longer have updates, say goodbye to python\n\nCheckout the code on Github: **https://github.com/qutdevs/LegacyDiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -87,7 +87,7 @@ class Moderation(commands.Cog):
         await member.send(f"You have been muted from: - {ctx.guild.name}")
         embed = discord.Embed(
             title=f"{version} Mute",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"Muted-{member.mention}",
             colour=discord.Colour.dark_blue())
         await ctx.send(embed=embed)
@@ -105,7 +105,7 @@ class Moderation(commands.Cog):
         await member.send(f"you have been un-muted from: - {ctx.guild.name}")
         embed = discord.Embed(
             title=f"{version} Unmute",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"Un-muted-{member.mention}",
             colour=discord.Colour.dark_blue())
         await ctx.send(embed=embed)
@@ -167,7 +167,7 @@ class Verification(commands.Cog):
     async def _info(self, ctx):
         embed = discord.Embed(
             title="Verification Instructions",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"1. Go to #verification\n2. Send your student number e.g. `n12345678`\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -241,7 +241,7 @@ class Humour(commands.Cog):
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Weather",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"{response[response_rand]}",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -271,7 +271,7 @@ class Humour(commands.Cog):
         response_rand = randrange(len(response))
         embed = discord.Embed(
             title=f"{version} Niceness",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"{response[response_rand]}",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -284,7 +284,7 @@ class Humour(commands.Cog):
     async def _bitches(self, ctx):
         embed = discord.Embed(
             title=f"{version} Bitches",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             colour=discord.Colour.dark_blue())
         embed.set_image(url=f"https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F297%2F368%2F17f.jpg")
         await ctx.send(embed=embed)
@@ -308,7 +308,7 @@ class Humour(commands.Cog):
                 f"https://c.tenor.com/S76w2GR4HOsAAAAC/among-us-digibyte.gif"]
         embed = discord.Embed(
             title=f"{version} Amogus",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             colour=discord.Colour.dark_blue())
         embed.set_image(url=f"{sussy[randrange(len(sussy))]}")
         await ctx.send(embed=embed)
@@ -324,8 +324,8 @@ class Info(commands.Cog):
         global version
         embed = discord.Embed(
             title=f"{version}",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            description=f"This bot was designed and developed by *Emmey Leo* for the QUT IN01 Discord server. It provides a system to verify that new members are QUT students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/Mistyttm/DiscordQUTVerificationBot**",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            description=f"This bot was designed and developed by *Emmey Leo* for the QUT IN01 Discord server. It provides a system to verify that new members are QUT students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/qutdevs/LegacyDiscordQUTVerificationBot**",
             color=discord.Color.dark_blue())
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
@@ -341,7 +341,7 @@ class Info(commands.Cog):
         global changelog
         embed = discord.Embed(
             title=f"{version} Changelog",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"{changelog}",
             color=discord.Color.dark_blue())
         embed.set_thumbnail(
@@ -359,8 +359,8 @@ class Info(commands.Cog):
     async def _bug(self, ctx):
         embed = discord.Embed(
             title=f"{version} Issue report",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
-            description=f"Please use this link to create a bug report:\n\nhttps://github.com/Mistyttm/DiscordQUTVerificationBot/issues/new/choose",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            description=f"Please use this link to create a bug report:\n\nhttps://github.com/qutdevs/LegacyDiscordQUTVerificationBot/issues/new/choose",
             color=discord.Color.red())
         await ctx.send(embed=embed)
 
@@ -372,7 +372,7 @@ class Info(commands.Cog):
     async def _hiq(self, ctx):
         embed = discord.Embed(
             title=f"{version} HiQ",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"HiQ:\n\nhttps://qutvirtual4.qut.edu.au/group/student/home",
             color=discord.Color.dark_blue())
         embed.set_thumbnail(
@@ -387,7 +387,7 @@ class Info(commands.Cog):
     async def _hiq(self, ctx):
         embed = discord.Embed(
             title=f"{version} Tone Tags",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"A useful guide for tone tags:\n\n**https://toneindicators.carrd.co/**",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -402,7 +402,7 @@ class Info(commands.Cog):
         weather = await client.find("Brisbane")
         embed = discord.Embed(
             title=f"{version} Weather",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"The weather currently is: {weather.current.sky_text}\nThe current temperature is: {weather.current.temperature}°C",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -416,7 +416,7 @@ class Info(commands.Cog):
     async def _mopp(self, ctx):
         embed = discord.Embed(
             title=f"{version} MOPP | Student Code of conduct",
-            url="https://github.com/Mistyttm/DiscordQUTVerificationBot",
+            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
             description=f"This command is being used to remind you about the QUT MOPP.\n\nIt is the student code of conduct and provides useful information on things like collusion.\n\nIf you are seeing this you should probably take a look at this page\n\n\n\n**http://www.mopp.qut.edu.au/E/E_02_01.jsp**",
             color=discord.Color.red())
         
