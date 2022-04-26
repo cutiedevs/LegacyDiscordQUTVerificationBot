@@ -1,6 +1,6 @@
 # QUTBot: A Discord bot for QUT servers (DEPRECATED)
 
-Built on discord.py
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 ## Features
 
