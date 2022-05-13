@@ -34,15 +34,15 @@ token = getenv("DISCORD_TOKEN")
 # Bot
 intents = discord.Intents.all()
 bot = commands.Bot(
-    command_prefix="qut!",
-    description="A bot to help with QUT servers", intents=intents)
+    command_prefix="cu!",
+    description="A bot to help with QUT community servers", intents=intents)
 
 # Guild
 guild = bot.get_guild(int(getenv("GUILD_ID")))
 
 # Embed customisation
 nav = DefaultMenu(page_left="◀️", page_right="▶️", remove="❌")
-ending_note = f"QUTBot is not affiliated with QUT"
+ending_note = f"CutieBot is not affiliated with QUT"
 bot.help_command = PrettyHelp(
     menu=nav, color=discord.Colour.blue(), ending_note=ending_note)
 
@@ -50,8 +50,8 @@ bot.help_command = PrettyHelp(
 codes = []
 
 # Changelog
-version = "QUTBot v1.5.5"
-changelog = "We are officially moving over to Javascript! This bot will no longer have updates, say goodbye to python\n\nCheckout the code on Github: **https://github.com/qutdevs/LegacyDiscordQUTVerificationBot**"
+version = "CutieBot v1.5.6"
+changelog = "**YOU NOW USE `cu!` AS THE COMMAND PREFIX**\n\n- Rebranding\n- Unfortunately had to remove all humour commands\n\nCheckout the code on Github: **https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot**"
 
 
 @bot.event
@@ -87,7 +87,7 @@ class Moderation(commands.Cog):
         await member.send(f"You have been muted from: - {ctx.guild.name}")
         embed = discord.Embed(
             title=f"{version} Mute",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"Muted-{member.mention}",
             colour=discord.Colour.dark_blue())
         await ctx.send(embed=embed)
@@ -105,7 +105,7 @@ class Moderation(commands.Cog):
         await member.send(f"you have been un-muted from: - {ctx.guild.name}")
         embed = discord.Embed(
             title=f"{version} Unmute",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"Un-muted-{member.mention}",
             colour=discord.Colour.dark_blue())
         await ctx.send(embed=embed)
@@ -167,7 +167,7 @@ class Verification(commands.Cog):
     async def _info(self, ctx):
         embed = discord.Embed(
             title="Verification Instructions",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"1. Go to #verification\n2. Send your student number e.g. `n12345678`\n3. Check your QUT email for the verification code\n4. Send the verification code in #verification",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -196,123 +196,6 @@ class Verification(commands.Cog):
         print(codes)
         await ctx.send(f"Your custom code is: {arg}")
 
-class Humour(commands.Cog):
-    """Humorous commands"""
-    
-    @commands.command(
-        name="ie",
-        brief="ie",
-        help="ie"
-    )
-    async def _ie(self, ctx):
-        response = ["Fuck you", 
-                    "Bitch", 
-                    "You're okay", 
-                    "Ass face", 
-                    "You look like your parents neglected you as an 8 year old", 
-                    "You look like a use paper clip", 
-                    "Fuck Face", 
-                    "Yes I'm going to keep insulting you", 
-                    "No bitches?", 
-                    "Who asked", 
-                    "go fuck yourself",
-                    "You incomplete idiot sandwich",
-                    "You unpredictable shitbreath",
-                    "You corrupt piss monkey",
-                    "You're a dislikeable twat",
-                    "Thou puny hell-hated bladder!",
-                    "Thou artless plume-plucked horse-drench!",
-                    "You're just a fucking hexagon, aren't you? Yea, you fucking little hexagon, no one likes you hexagon piss baby. Fuck you hexagon piece of shit",
-                    "you're the reason elevators have a weight limit",
-                    "your neck is longer than a 3 day weekend",
-                    "Out there somewhere is a tree that produced oxygen for you to waste, please go and find that tree to apologise",
-                    "you got a treehouse in your garage named spencer",
-                    "you wanna know why you got disconnected, its because you have no connections",
-                    "Oh it's you",
-                    "I see the condom worked well",
-                    "you're so broke, you can't afford vents, you just got holes in your ceiling",
-                    "the education systems would like to apologise. it clearly failed you ",
-                    "get your tenacious tucan flamboyant flamingo lookin ass outta here",
-                    "your haircut cost 3 dark elixr",
-                    "you look like the E in the DELL logo",
-                    "i didn't know they stack shit that high",
-                    "you are not valid",
-                    "I just know you post on your private story sayin stuff like 'yo game time' and then your team looses 47 -  5"]
-        response_rand = randrange(len(response))
-        embed = discord.Embed(
-            title=f"{version} Weather",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            description=f"{response[response_rand]}",
-            color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
-    
-    @commands.command(
-        name="e",
-        brief="e",
-        help="e"
-    )
-    async def _e(self, ctx):
-        response = ["I love you", 
-                    "You're so cool", 
-                    "Keep going, you got this!!", 
-                    "I believe in you", 
-                    "You're amazing", 
-                    "I couldn't imagine anyone better than you ^-^", 
-                    "you are good enough", 
-                    "Never give up friend :)",
-                    "Aside from food. You're my favorite.",
-                    "You're like a breath of fresh air.",
-                    "The people you love are lucky to have you in their lives.",
-                    "Actions speak louder than words, and yours tell an incredible story.",
-                    "Colors seem brighter when you're around.",
-                    "You're the coolest person I know. And I consider myself best friends with like all celebrities, so...",
-                    "You should be thanked more often. So thank you!!",
-                    "You help me feel more joy in life."]
-        response_rand = randrange(len(response))
-        embed = discord.Embed(
-            title=f"{version} Niceness",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            description=f"{response[response_rand]}",
-            color=discord.Color.dark_blue())
-        await ctx.send(embed=embed)
-    
-    @commands.command(
-        name="getbitches",
-        brief="Get some bitches",
-        help="Gets you some bitches"
-    )
-    async def _bitches(self, ctx):
-        embed = discord.Embed(
-            title=f"{version} Bitches",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            colour=discord.Colour.dark_blue())
-        embed.set_image(url=f"https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F297%2F368%2F17f.jpg")
-        await ctx.send(embed=embed)
-    
-    @commands.command(
-        name="sus",
-        brief="sus",
-        help="sus"
-    )
-    async def _sus(self, ctx):
-        sussy = [f"https://c.tenor.com/YebbLUmkg9YAAAAC/among-us.gif", 
-                f"https://c.tenor.com/gQV5VzHLWQIAAAAd/among-us-sus.gif", 
-                f"https://c.tenor.com/vHroFuuevf0AAAAC/among-us.gif", 
-                f"https://c.tenor.com/uW6H2QV23ZwAAAAC/amogus-cry-about-it.gif", 
-                f"https://c.tenor.com/bd5bGRCMdwwAAAAd/among-us-sussy-baka-sus-check.gif", 
-                f"https://c.tenor.com/Uhpq_2f77qwAAAAC/among-us-amogus.gif", 
-                f"https://c.tenor.com/9t6T1DT0oFUAAAAM/sussy-imposter-sussy.gif", 
-                f"https://c.tenor.com/mT-5WUuvZDgAAAAd/amogus-impostor.gif", 
-                f"https://c.tenor.com/h1RL4AqIDJIAAAAC/stop-posting-about-among-us-adventure-time.gif", 
-                "My creator despises this command with her whole being", 
-                f"https://c.tenor.com/S76w2GR4HOsAAAAC/among-us-digibyte.gif"]
-        embed = discord.Embed(
-            title=f"{version} Amogus",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            colour=discord.Colour.dark_blue())
-        embed.set_image(url=f"{sussy[randrange(len(sussy))]}")
-        await ctx.send(embed=embed)
-
 class Info(commands.Cog):
     """Information commands"""
     @commands.command(
@@ -324,11 +207,9 @@ class Info(commands.Cog):
         global version
         embed = discord.Embed(
             title=f"{version}",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            description=f"This bot was designed and developed by *Emmey Leo* for the QUT IN01 Discord server. It provides a system to verify that new members are QUT students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/qutdevs/LegacyDiscordQUTVerificationBot**",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
+            description=f"This bot was designed and developed by *Emmey Leo* for the IT Crew '22 Discord server. It provides a system to verify that new members are QUT students. This project is completely open source and any and all people are allowed to contribute to the github:\n\n**https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot**",
             color=discord.Color.dark_blue())
-        embed.set_thumbnail(
-            url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
         await ctx.send(embed=embed)
 
     @commands.command(
@@ -341,11 +222,9 @@ class Info(commands.Cog):
         global changelog
         embed = discord.Embed(
             title=f"{version} Changelog",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"{changelog}",
             color=discord.Color.dark_blue())
-        embed.set_thumbnail(
-            url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
         embed.set_author(
             name="Emmey",
             icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
@@ -359,8 +238,8 @@ class Info(commands.Cog):
     async def _bug(self, ctx):
         embed = discord.Embed(
             title=f"{version} Issue report",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
-            description=f"Please use this link to create a bug report:\n\nhttps://github.com/qutdevs/LegacyDiscordQUTVerificationBot/issues/new/choose",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
+            description=f"Please use this link to create a bug report:\n\nhttps://github.com/cutiedevs/LegacyDiscordQUTVerificationBot/issues/new/choose",
             color=discord.Color.red())
         await ctx.send(embed=embed)
 
@@ -372,11 +251,9 @@ class Info(commands.Cog):
     async def _hiq(self, ctx):
         embed = discord.Embed(
             title=f"{version} HiQ",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"HiQ:\n\nhttps://qutvirtual4.qut.edu.au/group/student/home",
             color=discord.Color.dark_blue())
-        embed.set_thumbnail(
-            url="https://qutvirtual4.qut.edu.au/image/image_gallery?uuid=acca9ca6-6d8c-4643-9351-d2f2c2b450eb&groupId=13901&filename=HiQlogo.jpg&t=1581892242556")
         await ctx.send(embed=embed)
 
     @commands.command(
@@ -387,22 +264,22 @@ class Info(commands.Cog):
     async def _hiq(self, ctx):
         embed = discord.Embed(
             title=f"{version} Tone Tags",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"A useful guide for tone tags:\n\n**https://toneindicators.carrd.co/**",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
     
     @commands.command(
         name="weather",
-        brief="Tells you the weather at QUT",
-        help="A command to tell you the current weather at QUT"
+        brief="Tells you the weather in Brisbane City",
+        help="A command to tell you the current weather in Brisbane City"
     )
     async def _weather(self, ctx):
         client = python_weather.Client()
         weather = await client.find("Brisbane")
         embed = discord.Embed(
             title=f"{version} Weather",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"The weather currently is: {weather.current.sky_text}\nThe current temperature is: {weather.current.temperature}°C",
             color=discord.Color.dark_blue())
         await ctx.send(embed=embed)
@@ -416,7 +293,7 @@ class Info(commands.Cog):
     async def _mopp(self, ctx):
         embed = discord.Embed(
             title=f"{version} MOPP | Student Code of conduct",
-            url="https://github.com/qutdevs/LegacyDiscordQUTVerificationBot",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"This command is being used to remind you about the QUT MOPP.\n\nIt is the student code of conduct and provides useful information on things like collusion.\n\nIf you are seeing this you should probably take a look at this page\n\n\n\n**http://www.mopp.qut.edu.au/E/E_02_01.jsp**",
             color=discord.Color.red())
         
@@ -577,19 +454,15 @@ async def on_message(message: discord.Message):
 @tasks.loop(seconds=180)
 async def status_loop():
     status = [
-        "qut!help for commands", "Check HiQ for info about QUT",
+        "cu!help for commands", "Check HiQ for info about QUT",
         "Don't forget to submit!", "Who doesn't love coding",
         "Why doesn't my Pi work?", "Programming is hard :(",
-        "Can I join someone's group?", "Pokemon is cool!",
-        f"Hi there! {version}",
-        "Why are these guys so hard on collusion?", "t u r t l e",
-        "Don't use Chegg", "APA or Harvard", "qut!help gets you help",
-        "That's not very slay yass of u", "In my reputation era",
-        "Getting them girlboss vibes",
-        "Feeling submissive and breedable", "Trans rights",
+        "Can I join someone's group?",
+        f"Hi there! {version}", "t u r t l e",
+        "Don't use Chegg", "APA or Harvard", "cu!help gets you help", "In my reputation era",
+        "Getting them girlboss vibes", "Trans rights",
         "No sleep, only program", "Fish fear me",
-        "Dreading my existence", "What is my purpose?",
-        "Prioritize being hot", "Lambageddon"]
+        "Dreading my existence", "What is my purpose?", "Lambageddon"]
 
     status_rand = randrange(len(status))
     await sleep(180)
@@ -606,17 +479,14 @@ async def on_ready():
     # print(changelog_sent)
 
     # Sends changelog in announcements
-    announcements = find(lambda x: x.name ==
-                         'announcements', guild.text_channels)
+    announcements = find(lambda x: x.name == 'announcements', guild.text_channels)
     if announcements and announcements.permissions_for(
             guild.me).send_messages:
         embed = discord.Embed(
             title=f"{version} Changelog",
-            url="https://realdrewdata.medium.com/",
+            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
             description=f"{changelog}",
             color=discord.Color.dark_blue())
-        embed.set_thumbnail(
-            url="https://media.discordapp.net/attachments/943355996934402119/954311293249138708/qut-bot-logo.png?width=663&height=663")
         embed.set_author(
             name="Emmey",
             icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
@@ -633,7 +503,7 @@ async def on_guild_join(guild: discord.Guild):
     general = find(lambda x: x.name ==
                    'general-general', guild.text_channels)
     if general and general.permissions_for(guild.me).send_messages:
-        await general.send("Hi there! I'm QUTBot, I don't have many features right now, but I hope you'll help me grow :D")
+        await general.send("Hi there! I'm CutieBot, I don't have many features right now, but I hope you'll help me grow :D")
 
 # assigns a new member the visitor role then DMs them
 @bot.event
@@ -655,7 +525,6 @@ def run():
     bot.add_cog(Moderation(bot))
     bot.add_cog(Info(bot))
     bot.add_cog(Verification(bot))
-    bot.add_cog(Humour(bot))
     # bot.add_cog(Study(bot))
 
     bot.run(token)
