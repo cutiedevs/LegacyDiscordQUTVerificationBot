@@ -1,4 +1,4 @@
-# QUTBot: A Discord bot for QUT servers (DEPRECATED)
+# CutieBot: A Discord bot for QUT servers (DEPRECATED)
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
