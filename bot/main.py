@@ -31,6 +31,8 @@ load_dotenv()
 # Discord API token
 token = getenv("DISCORD_TOKEN")
 
+sender = getenv("EMAIL")
+
 # Bot
 intents = discord.Intents.all()
 bot = commands.Bot(
@@ -316,9 +318,6 @@ async def on_message(message: discord.Message):
     if student_number:
         # Generate random unique verification code
         verification_code = f"{randint(0, 9999):04}"
-
-        # Code to email the verification code
-        sender = 'discordbotforin01@gmail.com'
         
         # Check if 'n' was given in message
         if student_number[0][0].lower() != 'n':
@@ -335,19 +334,16 @@ async def on_message(message: discord.Message):
         padding: 0 10rem;
         font-family: 'Open Sans', sans-serif;
     }}
-
     .heading_text {{
         margin: 0.8rem 0;
         font-weight: 600;
         font-size: 3.5rem;
     }}
-
     .main_text {{
         margin: 1em 0;
         font-weight: 400;
         font-size: 1.5rem;
     }}
-
     .verification_code {{
         padding: 0 32px;
         font-family: JetBrains Mono, sans-serif;
@@ -358,13 +354,11 @@ async def on_message(message: discord.Message):
         letter-spacing: 5px;
         text-align: center;
     }}
-
     .footer_text {{
         margin: 3em 0;
         font-weight: 400;
         font-size: 1rem;
     }}
-
 </style>
 </head>
 <body>
@@ -395,11 +389,11 @@ async def on_message(message: discord.Message):
         # Setup email
         msg = MIMEText(body_send, 'html')
         msg['Subject'] = 'Discord Verification Code'
-        msg['From'] = formataddr(('QUTBot', sender))
+        msg['From'] = formataddr(('QutieBot', sender))
         msg['To'] = receiver
         
-        s = SMTP_SSL(host='smtp.gmail.com', port=465)
-        s.login(user=sender, password=getenv('GMAILPASS'))
+        s = SMTP_SSL(host="smtp.mail.yahoo.com",port=465)
+        s.login(sender, getenv('EMAILPASS'))
         s.sendmail(sender, receiver, msg.as_string())
         s.quit()
         
