@@ -473,18 +473,18 @@ async def on_ready():
     # print(changelog_sent)
 
     # Sends changelog in announcements
-    announcements = find(lambda x: x.name == 'announcements', guild.text_channels)
-    if announcements and announcements.permissions_for(
-            guild.me).send_messages:
-        embed = discord.Embed(
-            title=f"{version} Changelog",
-            url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
-            description=f"{changelog}",
-            color=discord.Color.dark_blue())
-        embed.set_author(
-            name="Emmey",
-            icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
-        await announcements.send(embed=embed)
+    #announcements = find(lambda x: x.name == 'announcements', guild.text_channels)
+    #if announcements and announcements.permissions_for(
+    #        guild.me).send_messages:
+    #    embed = discord.Embed(
+    #        title=f"{version} Changelog",
+    #        url="https://github.com/cutiedevs/LegacyDiscordQUTVerificationBot",
+    #        description=f"{changelog}",
+    #        color=discord.Color.dark_blue())
+    #    embed.set_author(
+    #        name="Emmey",
+    #        icon_url="https://cdn.discordapp.com/attachments/835791348291469342/966614636088664084/207297_Jvx2cc7L.png")
+    #    await announcements.send(embed=embed)
 
     # Begins the status changing
     await bot.change_presence(activity=discord.Game(f"Hi there! {version}"))
